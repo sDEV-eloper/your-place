@@ -1,6 +1,7 @@
 import express from 'express'
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
+import userRouter from './routes/userRoute.js'
 
 dotenv.config()
 mongoose.connect(process.env.YOURPLACE_DB_URI)
@@ -9,9 +10,9 @@ mongoose.connect(process.env.YOURPLACE_DB_URI)
 
 const app=express()
 
-
-
 const PORT=process.env.PORT || 8080
 app.listen(PORT, ()=>{
     console.log(`Server is running on port ${PORT}`)
 })
+
+app.use("/api/user", userRouter)
