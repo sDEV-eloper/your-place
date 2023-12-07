@@ -21,7 +21,7 @@ app.use("/api/auth", authRouter)
 
 //error handling middleware
 //in order to use this middleware use 'next' , like in controllers
-app.use((err, res)=>{
+app.use((err, req, res, next)=>{
     const statusCode=err.statusCode || 500
     const message=err.message || "Internal Server Error"
     return  res.status(statusCode).json({
