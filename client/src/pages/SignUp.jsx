@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import  { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import axios from 'axios'
+
 import toast from 'react-hot-toast'
 
 const SignUp = () => {
@@ -23,9 +23,15 @@ const handleSubmit=async(e)=>{
           password,
         }),
       });
-    console.log(response);
-    toast.success(response.data)
-    navigate('/sign-in')
+    console.log("response", response);
+    if (response.ok) {
+      const responseData = await response.json();
+     toast.success(responseData); 
+     navigate('/sign-in')
+    } else {
+      const errorData = await response.json();
+      toast.error(errorData); 
+    }
 
     
   } catch (error) {
