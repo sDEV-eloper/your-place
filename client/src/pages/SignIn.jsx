@@ -1,15 +1,20 @@
 import { useState } from "react"
 import toast from "react-hot-toast"
+import { useDispatch, useSelector } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
+import { signInFail, signInStart, signInSuccess } from "../assets/redux/userSlice/userSlice"
 
 
 const SignIn = () => {
   const navigate =useNavigate()
+  const dispatch=useDispatch()
+ const {loading, error}=useSelector((state)=>state.user)
   const [email, setEmail]=useState('')
 const [password, setPassword]=useState('')
   const handleSubmit=async(e)=>{
     e.preventDefault();
     try {
+      dispatch(signInStart())
       const response = await fetch('/api/auth/signin', {
           method: 'POST',
           headers: {
@@ -20,21 +25,25 @@ const [password, setPassword]=useState('')
             password,
           }),
         });
-      console.log("response", response);
+
     
       if (response.ok) {
-        const responseData = await response.json();
-       toast.success(`${responseData.username}${responseData.message}`); 
+        const userResponseData = await response.json();
+        console.log("urd", userResponseData)
+       toast.success(`${userResponseData.username} sign in successfully`); 
+       dispatch(signInSuccess(userResponseData))
        navigate('/')
       } else {
         const errorData = await response.json();
         console.log(errorData)
+        dispatch(signInFail(errorData.message))
         toast.error(`${errorData.message}`); 
       }
   
       
     } catch (error) {
       toast.error(error)
+      dispatch(signInFail(error))
     }
   }
   return (

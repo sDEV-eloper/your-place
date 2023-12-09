@@ -39,7 +39,6 @@ export const signin= async(req, res, next)=>{
 
     console.log("VP--->", validPassword)
     if (validPassword) {
-      res.status(200).json({ message: "signed in successfully" });
       const token=jwt.sign({ _id: validUser._id}, process.env.JWT_SECRET)
         const {password:pass , ...rest}=validUser._doc;
         //save token inside cookie
