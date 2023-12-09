@@ -5,8 +5,8 @@ import { Link, useNavigate } from "react-router-dom"
 
 const SignIn = () => {
   const navigate =useNavigate()
-  const [email, setEmail]=useState()
-const [password, setPassword]=useState()
+  const [email, setEmail]=useState('')
+const [password, setPassword]=useState('')
   const handleSubmit=async(e)=>{
     e.preventDefault();
     try {
@@ -21,13 +21,15 @@ const [password, setPassword]=useState()
           }),
         });
       console.log("response", response);
+    
       if (response.ok) {
         const responseData = await response.json();
-       toast.success(responseData); 
+       toast.success(`${responseData.username}${responseData.message}`); 
        navigate('/')
       } else {
         const errorData = await response.json();
-        toast.error(errorData); 
+        console.log(errorData)
+        toast.error(`${errorData.message}`); 
       }
   
       
