@@ -33,7 +33,9 @@ export default function Header() {
              (
               <div className="flex items-center gap-2">
                 <p className="text-sm">{userData.username} </p>
+                <Link to='/profile'>
                { userData?.avatar ? <img src={userData?.avatar} className="w-8 rounded-full" alt="user"/>: <Avatar name={userData?.username} size={40} round="10px"/> }
+                </Link>
               </div>
             )
             }       
