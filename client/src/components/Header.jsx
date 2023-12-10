@@ -1,7 +1,14 @@
 
 import { CiSearch } from "react-icons/ci";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import Avatar from 'react-avatar'
+
+
+
 export default function Header() {
+  const userData=useSelector((state)=>state.user.currentUser)
+
   return (
     <header className="bg-[#e6f4f8] p-4 flex justify-between shadow-md">
      <Link to="/"> 
@@ -18,9 +25,15 @@ export default function Header() {
         <ul className="flex gap-12 items-center text-[#3489a3] ">
             <li className="hover:font-medium cursor-pointer hidden sm:inline">Home</li>
             <li className="hover:font-medium cursor-pointer hidden sm:inline">About</li>
-            <Link to="/sign-in">
+           {!userData ?
+            (<Link to="/sign-in">
             <li className="hover:font-medium cursor-pointer hidden sm:inline">Sign In</li>
-            </Link>           
+            </Link>) 
+             : 
+             (
+              <Avatar name={userData.username} size={40} round="10px" />
+            )
+            }       
         </ul>
       </nav>
     </header>

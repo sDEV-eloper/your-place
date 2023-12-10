@@ -1,6 +1,6 @@
 import { useState } from "react"
 import toast from "react-hot-toast"
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
 import { signInFail, signInStart, signInSuccess } from "../assets/redux/userSlice/userSlice"
 
@@ -8,7 +8,6 @@ import { signInFail, signInStart, signInSuccess } from "../assets/redux/userSlic
 const SignIn = () => {
   const navigate =useNavigate()
   const dispatch=useDispatch()
- const {loading, error}=useSelector((state)=>state.user)
   const [email, setEmail]=useState('')
 const [password, setPassword]=useState('')
   const handleSubmit=async(e)=>{
