@@ -8,7 +8,7 @@ import Avatar from 'react-avatar'
 
 export default function Header() {
   const userData=useSelector((state)=>state.user.currentUser)
-
+  console.log("header user data", userData)
   return (
     <header className="bg-[#e6f4f8] p-4 flex justify-between shadow-md">
      <Link to="/"> 
@@ -31,7 +31,10 @@ export default function Header() {
             </Link>) 
              : 
              (
-              <Avatar name={userData.username} size={40} round="10px" />
+              <div className="flex items-center gap-2">
+                <p className="text-sm">{userData.username} </p>
+               { userData?.avatar ? <img src={userData?.avatar} className="w-8 rounded-full" alt="user"/>: <Avatar name={userData?.username} size={40} round="10px"/> }
+              </div>
             )
             }       
         </ul>
