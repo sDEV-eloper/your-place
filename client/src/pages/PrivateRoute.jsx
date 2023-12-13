@@ -8,7 +8,6 @@ const PrivateRoute = () => {
   return (
     <>
     {userData? <Outlet/> : <Navigate to="/sign-in"/>}
-      Private
     </>
   )
 }
