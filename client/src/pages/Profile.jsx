@@ -81,6 +81,7 @@ try {
   }
 
   dispatch(updateUserSuccess(data));
+  toast.success("Updated Successfully")
 } catch (error) {
   dispatch(updateUserFailure(error.message));
 }

@@ -4,6 +4,7 @@ import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 import userRouter from './routes/userRoute.js'
 import authRouter from './routes/authRoute.js'
+import listingRouter from './routes/listingRouter.js'
 import cookieParser from 'cookie-parser'
 
 dotenv.config()
@@ -22,6 +23,7 @@ app.listen(PORT, ()=>{
 
 app.use("/api/user", userRouter)
 app.use("/api/auth", authRouter)
+app.use("/api/list", listingRouter)
 
 //error handling middleware
 //in order to use this middleware use 'next' , like in controllers
