@@ -4,6 +4,7 @@ import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 import userRouter from './routes/userRoute.js'
 import authRouter from './routes/authRoute.js'
+import cookieParser from 'cookie-parser'
 
 dotenv.config()
 mongoose.connect(process.env.YOURPLACE_DB_URI)
@@ -12,6 +13,7 @@ mongoose.connect(process.env.YOURPLACE_DB_URI)
 
 const app=express()
 app.use(cors())
+app.use(cookieParser())
 app.use(express.json()) //it allows JSON as input of the server
 const PORT=process.env.PORT || 8080
 app.listen(PORT, ()=>{
