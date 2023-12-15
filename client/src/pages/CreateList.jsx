@@ -1,11 +1,12 @@
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
-import { useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux"
+import {  useState } from "react";
+import {  useSelector } from "react-redux"
 import { app } from "../firebase";
 import {toast} from 'react-hot-toast'
+import {useNavigate} from 'react-router-dom'
 
 const CreateList = () => {
-
+  const navigate=useNavigate()
   const {currentUser}=useSelector((state)=>state.user)
     const [images, setImages]=useState([])
     const [uploading, setUploading]=useState(false)
@@ -106,6 +107,9 @@ if(e.target.type==='number'|| e.target.type==='text' || e.target.type==='textare
 const handleSubmit=async(e)=>{
   e.preventDefault();
   try{
+      if(formData.imageUrls.length<1){
+        return  setError("Must have alteast 1 image")
+      }
     setLoading(true)
     setError(false)
     const data=await fetch('/api/list/create-list', {
@@ -118,9 +122,9 @@ const handleSubmit=async(e)=>{
         
     })
     const res=await data.json()
-    console.log("result", res)
     setLoading(false)
     toast.success("List Created")
+    navigate(`/view-list/${res._id}`)
     if(res.success===false){
       setError(res.message)
     }
