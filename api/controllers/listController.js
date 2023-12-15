@@ -40,3 +40,24 @@ export const deleteList=async(req, res, next)=>{
         next(err)
     }
 }
+
+export const updateList=async(req, res, next)=>{
+    console.log("reb", req.body)
+    const listing=await Listing.findById(req.params.id)
+    if(!listing){
+        return next(errorHandler("No such listing exists", "not found"))
+    }
+    if(req.user._id!=listing.userRef){
+        return next(errorHandler(401, "Only view your own listing"))
+    }
+    try{
+        
+       const updatedNewList= await Listing.findByIdAndUpdate(req.params.id,
+        req.body,
+      {new: true} 
+         )
+        res.status(200).json(updatedNewList)
+    }catch(err){
+        next(err)
+    }
+}
