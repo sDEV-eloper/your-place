@@ -13,12 +13,11 @@ next(err)
 }
 
 export const getList=async(req, res, next)=>{
-console.log("-------", req.user._id)
-console.log("-------", req.params.id)
- if(req.user._id != req.params.id){
-    return next(errorHandler(401, "Only view your own listing"))
- }
- try{
+
+try{
+     if(req.user._id != req.params.id){
+        return next(errorHandler(401, "Only view your own listing"))
+     }
 const listings=await Listing.find({ userRef:req.params.id})
 res.status(200).json(listings)
  }catch(err){
