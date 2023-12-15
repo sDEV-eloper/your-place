@@ -24,3 +24,19 @@ res.status(200).json(listings)
     next(err)
  }
 }
+
+export const deleteList=async(req, res, next)=>{
+    const listing=await Listing.findById(req.params.id)
+    if(!listing){
+        return next(errorHandler("No such listing exists", "not found"))
+    }
+    try{
+        if(req.user._id!=listing.userRef){
+            return next(errorHandler(401, "Only view your own listing"))
+        }
+        await Listing.findByIdAndDelete(req.params.id)
+        res.status(200).json("List has been deleted")
+    }catch(err){
+        next(err)
+    }
+}
