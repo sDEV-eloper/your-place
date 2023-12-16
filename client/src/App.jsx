@@ -10,6 +10,7 @@ import PrivateRoute from './pages/PrivateRoute'
 import CreateList from './pages/CreateList'
 import ViewList from './pages/ViewList'
 import UpdateList from './pages/UpdateList'
+import Listing from './pages/Listing'
 
 
 export default function App() {
@@ -21,6 +22,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home/>}/>
         <Route path="/about" element={<About/>}/>
+        <Route path="/listings/:id" element={<Listing/>}/>
         <Route element={<PrivateRoute/>}> 
         <Route path="/profile" element={<Profile/>}/>
         <Route path="/create-list" element={<CreateList/>}/>
