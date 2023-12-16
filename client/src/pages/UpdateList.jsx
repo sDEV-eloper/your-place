@@ -1,0 +1,335 @@
+import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
+import {  useEffect, useState } from "react";
+import {  useSelector } from "react-redux"
+import { app } from "../firebase";
+import {toast} from 'react-hot-toast'
+import {useNavigate, useParams} from 'react-router-dom'
+
+
+const UpdateList = () => {
+  const navigate=useNavigate()
+  const param=useParams()
+  const {currentUser}=useSelector((state)=>state.user)
+    const [images, setImages]=useState([])
+    const [uploading, setUploading]=useState(false)
+    const [loading, setLoading]=useState(false)
+    const [error, setError]=useState(false)
+    const [imageUploadError, setImageUploadError]=useState()
+    const [formData, setFormData]=useState({
+        imageUrls: [],
+        name: '',
+        description:'',
+        address:'',
+        type:'rent',
+        bedrooms:1,
+        bathrooms:1,
+        regularPrice:0,
+        parking:false,
+        furnished:false,
+    })
+    console.log("img",images)
+    console.log("form data",formData)
+
+useEffect(()=>{
+const fetchListing=async()=>{
+const id=param.id;
+const response=await fetch(`/api/list/get/${id}`,{
+    method:'GET',
+}
+)
+const data=await response.json()
+setFormData(data)
+}
+fetchListing()
+},[])
+
+const handleUploadImage=()=>{
+setUploading(true)
+    if(images.length>0 && images.length<7){
+        const promises=[]
+        for(let i=0;i<images.length;i++){
+            promises.push(storageImage(images[i]))
+        }
+        Promise.all(promises).then((urls)=>{
+            setFormData({...formData, imageUrls: formData.imageUrls.concat(urls)
+            })
+            setImageUploadError(false)
+            setUploading(false)
+        }).catch((err)=>{
+            setImageUploadError("Image upload failed (less than 2MB required)")
+            setUploading(false)
+        })
+    }else{
+        setImageUploadError("Only up to 6 images can be uploaded")
+        setUploading(false)
+    }
+}
+
+const storageImage=async(image)=>{
+return  new Promise((resolve, reject)=>{
+    const storage=getStorage(app)
+    const fileName=new Date()+ image.name;
+    const storageRef=ref(storage, fileName)
+    const uploadTask=uploadBytesResumable(storageRef, image)
+    uploadTask.on("state_changed", 
+    (snapshot)=>{
+        const progress=(snapshot.bytesTransferred/snapshot.totalBytes)*100
+        console.log(`Upload is ${progress}% done`);
+
+    },
+    (error)=>{reject(error)},
+    ()=>{
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL)=>{
+            resolve(downloadURL)
+        })
+    }
+    )
+})
+}
+
+//Remove image
+const handleRemoveImage=(index)=>{
+    setFormData({
+        ...formData,
+        imageUrls: formData.imageUrls.filter((_, i) => i !== index),
+      });
+
+}
+
+const handleChange=(e)=>{
+
+if(e.target.id==='sale'|| e.target.id==='rent'){
+  setFormData({
+    ...formData, 
+    type: e.target.id
+  })
+}
+if(e.target.id==='parking'|| e.target.id==='furnished'){
+  setFormData({
+    ...formData, 
+    [ e.target.id]: e.target.checked
+  })
+}
+if(e.target.type==='number'|| e.target.type==='text' || e.target.type==='textarea'){
+  setFormData({
+    ...formData, 
+    [ e.target.id]: e.target.value
+
+  })
+}
+
+}
+
+const handleSubmit=async(e)=>{
+  e.preventDefault();
+  try{
+      if(formData.imageUrls.length<1){
+        return  setError("Must have alteast 1 image")
+      }
+    setLoading(true)
+    setError(false)
+    const data=await fetch(`/api/list/update-list/${param.id}`, {
+      method:'POST',
+      headers:{
+        'Content-Type':'application/json'
+        },
+        body:JSON.stringify({...formData,
+          userRef: currentUser._id} )
+        
+    })
+    const res=await data.json()
+    setLoading(false)
+    toast.success("List Updated")
+    navigate(`/view-list/${res._id}`)
+    if(res.success===false){
+      setError(res.message)
+    }
+  }catch(err){
+    console.log(err.message)
+    setLoading(false)
+    setError(err.message)
+  }
+}
+  return (
+    <main className='p-3 max-w-4xl mx-auto'>
+      <h1 className='text-3xl font-semibold text-center my-7'>
+        Update a Listing
+      </h1>
+      <form className='flex flex-col sm:flex-row gap-4' onSubmit={handleSubmit}>
+        <div className='flex flex-col gap-4 flex-1'>
+          <input
+            type='text'
+            onChange={handleChange}
+            value={formData.name}
+            placeholder='Name'
+            className='border p-3 rounded-lg'
+            id='name'
+            maxLength='62'
+            minLength='2'
+            required
+                 />
+          <textarea
+            type='text'
+            placeholder='Description'
+            className='border p-3 rounded-lg'
+            id='description'
+            required
+            onChange={handleChange}
+            value={formData.description}
+          />
+          <input
+            type='text'
+            placeholder='Address'
+            className='border p-3 rounded-lg'
+            id='address'
+            required
+            onChange={handleChange}
+            value={formData.address}
+          />
+          <div className='flex gap-6 flex-wrap'>
+            <div className='flex gap-2'>
+              <input
+                type='checkbox'
+                id='sale'
+                className='w-5'
+                onChange={handleChange}
+            checked={formData.type==='sale'}
+              />
+              <span>Sell</span>
+            </div>
+            <div className='flex gap-2'>
+              <input
+                type='checkbox'
+                id='rent'
+                className='w-5'
+                onChange={handleChange}
+            checked={formData.type==='rent'}
+              />
+              <span>Rent</span>
+            </div>
+            <div className='flex gap-2'>
+              <input
+                type='checkbox'
+                id='parking'
+                className='w-5'
+                onChange={handleChange}
+                checked={formData.parking}
+              />
+              <span>Parking spot</span>
+            </div>
+            <div className='flex gap-2'>
+              <input
+                type='checkbox'
+                id='furnished'
+                className='w-5'
+                onChange={handleChange}
+                checked={formData.furnished}
+              />
+              <span>Furnished</span>
+            </div>
+          </div>
+          <div className='flex flex-wrap gap-6'>
+            <div className='flex items-center gap-2'>
+              <input
+                type='number'
+                id='bedrooms'
+                min='1'
+                max='10'
+                required
+                className='p-3 border border-gray-300 rounded-lg'
+                onChange={handleChange}
+               value={formData.bedrooms}
+              />
+              <p>Beds</p>
+            </div>
+            <div className='flex items-center gap-2'>
+              <input
+                type='number'
+                id='bathrooms'
+                min='1'
+                max='10'
+                required
+                className='p-3 border border-gray-300 rounded-lg'
+                onChange={handleChange}
+                value={formData.bathrooms}
+              />
+              <p>Baths</p>
+            </div>
+            <div className='flex items-center gap-2'>
+              <input
+                type='number'
+                id='regularPrice'
+                min='50'
+                max='10000000'
+                required
+                className='p-3 border border-gray-300 rounded-lg'
+                onChange={handleChange}
+                value={formData.regularPrice}
+              />
+              <div className='flex flex-col items-center'>
+                <p>Regular price</p>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        <div className='flex flex-col flex-1 gap-4'>
+          <p className='font-semibold'>
+            Images:
+            <span className='font-normal text-gray-600 ml-2'>
+              The first image will be the cover (max 6)
+            </span>
+          </p>
+          <div className='flex gap-4'>
+            <input
+          onChange={(e)=>setImages(e.target.files)}
+              className='p-3 border border-gray-300 rounded w-full'
+              type='file'
+              id='images'
+              accept='image/*'
+              multiple
+            />
+            <button
+            disabled={uploading}
+              type='button'
+            onClick={handleUploadImage}
+              className='p-3 text-green-700 border border-green-700 rounded uppercase hover:shadow-lg disabled:opacity-80'
+            >
+                {uploading ? "Uploading...": "Upload"}
+            </button>
+          </div>
+            {formData.imageUrls.length > 0 &&
+            formData.imageUrls.map((url, index) => (
+              <div
+                key={url}
+                className='flex justify-between p-3 border items-center'
+              >
+                <img
+                  src={url}
+                  alt='listing image'
+                  className='w-20 h-20 object-contain rounded-lg'
+                />
+                <button
+                  type='button'
+                  onClick={() => handleRemoveImage(index)}
+                  className='p-3 text-red-700 rounded-lg uppercase hover:opacity-75'
+                >
+                  Delete
+                </button>
+              </div>
+            ))}
+          <p className='text-red-700 text-sm'>{imageUploadError && imageUploadError }
+          </p>
+ 
+          <button   className='p-3 bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 disabled:opacity-80'
+          >
+            {loading? 'Updating...' : 'Update List'}
+          </button>
+         { error &&<p className='text-red-700 text-sm'>{error}</p>}
+        </div>
+      </form>
+    </main>
+  );
+}
+
+export default UpdateList

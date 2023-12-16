@@ -9,6 +9,8 @@ import { Toaster } from 'react-hot-toast';
 import PrivateRoute from './pages/PrivateRoute'
 import CreateList from './pages/CreateList'
 import ViewList from './pages/ViewList'
+import UpdateList from './pages/UpdateList'
+
 
 export default function App() {
   
@@ -23,6 +25,7 @@ export default function App() {
         <Route path="/profile" element={<Profile/>}/>
         <Route path="/create-list" element={<CreateList/>}/>
         <Route path="/view-list/:id" element={<ViewList/>}/>
+        <Route path="/update-list/:id" element={<UpdateList/>}/>
         </Route>
         <Route path="/sign-in" element={<SignIn/>}/>
         <Route path="/sign-up" element={<SignUp/>}/>

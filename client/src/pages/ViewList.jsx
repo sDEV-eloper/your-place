@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const ViewList = () => {
+  const navigate=useNavigate()
   const { currentUser } = useSelector((state) => state.user);
   const [listData, setListData] = useState([]);
   const fetchListData = async () => {
@@ -38,6 +40,10 @@ const ViewList = () => {
         console.log("Error in fetching data")
     }
   };
+  const handleListUpdate =async (listId) => {
+   navigate(`/update-list/${listId}`)
+  };
+
 
   return (
     <div className="flex flex-wrap">
@@ -58,7 +64,7 @@ const ViewList = () => {
               {item.address}
             </p>
             <div className="flex gap-2">
-              <button className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+              <button onClick={()=>handleListUpdate(item._id)} className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                 Edit
               </button>
               <button
