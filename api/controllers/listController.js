@@ -61,3 +61,16 @@ export const updateList=async(req, res, next)=>{
         next(err)
     }
 }
+
+export const getListData=async(req, res, next)=>{
+const id=req.params.id;
+try{
+    const data=await Listing.findById(id)
+    if(!data){
+        return next(errorHandler(404, "Data no found"))
+    }
+    res.status(200).json(data)
+}catch(err){
+    next(err)
+}
+}
