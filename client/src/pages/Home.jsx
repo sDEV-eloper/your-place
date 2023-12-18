@@ -1,16 +1,129 @@
-import { useState } from "react"
-import { useSelector } from "react-redux"
-
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { IoImages } from "react-icons/io5";
+import { FaSearchengin } from "react-icons/fa";
+import { MdCreateNewFolder } from "react-icons/md";
+import { IoCall } from "react-icons/io5";
+import ListingItem from '../components/ListingItem';
 
 export default function Home() {
-  const userData=useSelector((state)=>state.user.currentUser)
-  console.log("home user data", userData)
-  
-  return (
-      <div className='text-black'>
-        <h1>Welcome to the home page!</h1>
-        <button></button>
-    </div>
-  )
-}
+  const [offerListings, setOfferListings] = useState([]);
+  const [saleListings, setSaleListings] = useState([]);
+  const [rentListings, setRentListings] = useState([]);
 
+  useEffect(() => {
+    const fetchOfferListings = async () => {
+      try {
+        const res = await fetch('/api/list/get?limit=4');
+        const data = await res.json();
+        setOfferListings(data);
+        fetchRentListings();
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    const fetchRentListings = async () => {
+      try {
+        const res = await fetch('/api/list/get?type=rent&limit=4');
+        const data = await res.json();
+        setRentListings(data);
+        fetchSaleListings();
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    const fetchSaleListings = async () => {
+      try {
+        const res = await fetch('/api/list/get?type=sale&limit=4');
+        const data = await res.json();
+        setSaleListings(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchOfferListings();
+  }, []);
+  return (
+    <div>
+      {/* top */}
+<section className="bg-white dark:bg-gray-900">
+  <div className="grid max-w-screen-xl px-6 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
+    <div className="mr-auto place-self-center lg:col-span-7">
+      <h1 className="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl dark:text-white">Uniting Tenants and Owners for Effortless Housing Solutions!</h1>
+      <p className="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400"> YourPlace simplifies the tenant-owner connection, offering a user-friendly platform for effortless room finding and hassle-free tenant seeking. Discover your perfect match, connect seamlessly, and thrive in a stress-free housing experience.</p>
+  <div className='grid grid-cols-2 gap-4  '>
+  <p  className="inline-flex items-center justify-start px-5 py-3 text-base font-medium  text-[#376ca8]  hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
+     <span className='mr-2'><FaSearchengin /></span>
+      Effortless Search
+      </p>
+      <p  className="inline-flex items-center justify-start px-5 py-3 text-base font-medium  text-[#376ca8]  hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
+      <span className='mr-2'><IoCall /></span>
+      Direct Owner Contact
+      </p> 
+      <p  className="inline-flex items-center justify-start px-5 py-3 text-base font-medium  text-[#376ca8]  hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
+      <span className='mr-2'><IoImages /></span>
+      Room Visual
+      </p> 
+      <p  className="inline-flex items-center justify-start px-5 py-3 text-base font-medium  text-[#376ca8]  hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
+     
+<span className='mr-2'><MdCreateNewFolder /></span>
+      Become a Host
+      </p> 
+  </div>
+    </div>
+    <div className="hidden lg:mt-0 lg:col-span-5 lg:flex ">
+      <img src="https://cdn.pixabay.com/photo/2016/05/21/21/52/house-1407562_1280.jpg" alt="rental-house" className='rounded-xl'/>
+    </div>                
+  </div>
+</section>
+
+
+
+
+      {/* listing results for offer, sale and rent */}
+
+      <div className='max-w-6xl mx-auto p-3 flex flex-col gap-8 my-10'>
+        {offerListings && offerListings.length > 0 && (
+          <div className=''>
+            <div className='my-3'>
+              <h2 className='text-2xl font-semibold text-slate-600'>Recent offers</h2>
+              <Link className='text-sm text-blue-800 hover:underline' to={'/search?offer=true'}>Show more offers</Link>
+            </div>
+            <div className='flex flex-wrap gap-4'>
+              {offerListings.map((listing) => (
+                <ListingItem listing={listing} key={listing._id} />
+              ))}
+            </div>
+          </div>
+        )}
+        {rentListings && rentListings.length > 0 && (
+          <div className=''>
+            <div className='my-3'>
+              <h2 className='text-2xl font-semibold text-slate-600'>Recent places for rent</h2>
+              <Link className='text-sm text-blue-800 hover:underline' to={'/search?type=rent'}>Show more places for rent</Link>
+            </div>
+            <div className='flex flex-wrap gap-4'>
+              {rentListings.map((listing) => (
+                <ListingItem listing={listing} key={listing._id} />
+              ))}
+            </div>
+          </div>
+        )}
+        {saleListings && saleListings.length > 0 && (
+          <div className=''>
+            <div className='my-3'>
+              <h2 className='text-2xl font-semibold text-slate-600'>Recent places for sale</h2>
+              <Link className='text-sm text-blue-800 hover:underline' to={'/search?type=sale'}>Show more places for sale</Link>
+            </div>
+            <div className='flex flex-wrap gap-4'>
+              {saleListings.map((listing) => (
+                <ListingItem listing={listing} key={listing._id} />
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}

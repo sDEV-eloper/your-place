@@ -30,7 +30,7 @@ if(searchTermFromUrl){
 
   const userData=useSelector((state)=>state.user.currentUser)
   return (
-    <header className="bg-[#e6f4f8] p-4 flex justify-between shadow-md">
+    <header className="bg-[#1a373f] p-4 flex justify-between shadow-md">
      <Link to="/"> 
      <h1 className="rounded-lg flex gap-1 bg-[#164863] w-fit py-1 px-2 items-center flex-wrap">
         <span className="text-white text-xl font-bold">Your</span>
@@ -43,8 +43,8 @@ if(searchTermFromUrl){
       </form>
       <nav className="w-1/4">
         <ul className="flex gap-12 items-center text-[#3489a3] ">
-            <li className="hover:font-medium cursor-pointer hidden sm:inline">Home</li>
-            <li className="hover:font-medium cursor-pointer hidden sm:inline">About</li>
+            <Link to='/'><li className="hover:font-medium cursor-pointer hidden sm:inline">Home</li></Link>
+            <Link to='/about'><li className="hover:font-medium cursor-pointer hidden sm:inline">About</li></Link>
            {!userData ?
             (<Link to="/sign-in">
             <li className="hover:font-medium cursor-pointer hidden sm:inline">Sign In</li>
