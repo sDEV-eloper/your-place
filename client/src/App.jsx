@@ -11,6 +11,7 @@ import CreateList from './pages/CreateList'
 import ViewList from './pages/ViewList'
 import UpdateList from './pages/UpdateList'
 import Listing from './pages/Listing'
+import Search from './pages/Search'
 
 
 export default function App() {
@@ -23,6 +24,7 @@ export default function App() {
         <Route path="/" element={<Home/>}/>
         <Route path="/about" element={<About/>}/>
         <Route path="/listings/:id" element={<Listing/>}/>
+        <Route path="/search" element={<Search/>}/>
         <Route element={<PrivateRoute/>}> 
         <Route path="/profile" element={<Profile/>}/>
         <Route path="/create-list" element={<CreateList/>}/>
