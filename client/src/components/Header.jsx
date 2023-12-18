@@ -1,14 +1,34 @@
 
 import { CiSearch } from "react-icons/ci";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Avatar from 'react-avatar'
+import { useEffect, useState } from "react";
 
 
 
 export default function Header() {
+  const navigate=useNavigate()
+  const [searchTerm, setSearchTerm]=useState()
+
+  const handleSubmit=(e)=>{
+  e.preventDefault();
+const urlParams=new URLSearchParams(window.location.search)
+urlParams.set('searchTerm', searchTerm)
+const searchQuery=urlParams.toString()
+navigate(`/search?${searchQuery}`)
+}
+  useEffect(()=>{
+    const urlParams=new URLSearchParams(location.search)
+const searchTermFromUrl=urlParams.get('searchTerm')
+if(searchTermFromUrl){
+  setSearchTerm(searchTermFromUrl)
+}
+  },[location.search])
+
+
+
   const userData=useSelector((state)=>state.user.currentUser)
-  // console.log("header user data", userData)
   return (
     <header className="bg-[#e6f4f8] p-4 flex justify-between shadow-md">
      <Link to="/"> 
@@ -17,8 +37,8 @@ export default function Header() {
         <span className="text-[#9BBEC8] text-xl font-bold">Place</span>
       </h1>
       </Link>
-      <form className=" w-1/3 bg-white flex items-center px-4 rounded">
-        <input type="text"  placeholder="Search your place..." className=" w-full p-2 bg-transparent focus:outline-none"/>
+      <form onSubmit={handleSubmit} className=" w-1/3 bg-white flex items-center px-4 rounded">
+        <input type="text" value={searchTerm} onChange={(e)=>setSearchTerm(e.target.value)}  placeholder="Search your place..." className=" w-full p-2 bg-transparent focus:outline-none"/>
 <span className="cursor-pointer text-xl"><CiSearch /></span>
       </form>
       <nav className="w-1/4">
