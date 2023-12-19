@@ -3,7 +3,6 @@ import Home from './pages/Home'
 import About from './pages/About'
 import Profile from './pages/Profile'
 import SignIn from './pages/SignIn'
-import SignUp from './pages/SignUp'
 import Header from './components/Header'
 import { Toaster } from 'react-hot-toast';
 import PrivateRoute from './pages/PrivateRoute'
@@ -12,6 +11,7 @@ import ViewList from './pages/ViewList'
 import UpdateList from './pages/UpdateList'
 import Listing from './pages/Listing'
 import Search from './pages/Search'
+
 
 
 export default function App() {
@@ -32,7 +32,6 @@ export default function App() {
         <Route path="/update-list/:id" element={<UpdateList/>}/>
         </Route>
         <Route path="/sign-in" element={<SignIn/>}/>
-        <Route path="/sign-up" element={<SignUp/>}/>
       </Routes>
     </BrowserRouter>
   )

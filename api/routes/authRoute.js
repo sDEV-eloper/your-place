@@ -1,11 +1,11 @@
 import express from 'express'
-import { signin, signup, googleContinue, phoneContinue } from '../controllers/authController.js';
+import { signin, signup,  phoneAuth } from '../controllers/authController.js';
 
 const router = express.Router();
 
 router.post('/signup', signup)
 router.post('/signin', signin)
-router.post('/google', googleContinue)
-router.post('/phone', phoneContinue)
+router.post('/phone', phoneAuth)
+
 
 export default router;

@@ -6,10 +6,9 @@ import toast from 'react-hot-toast'
 import { updateUserFailure, updateUserSuccess, signOutSuccess } from "../assets/redux/userSlice/userSlice.js"
 import { Link, useNavigate } from "react-router-dom"
 const Profile = () => {
-  const userData=useSelector((state)=>state.user.currentUser)
+  const {currentUser}=useSelector((state)=>state.user)
 const fileRef=useRef(null)
 const [file, setFile]=useState(undefined)
-const [filePercentage, setFilePercentage]=useState()
 const [uploadSuccess, setUploadSuccess]=useState()
 const [err, setErr]=useState()
 const [formData, setFormData]=useState({})
@@ -33,9 +32,7 @@ const handleFileUpload = (file) => {
   uploadTask.on(
     'state_changed',
     (snapshot) => {
-      const progress =
-        (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      setFilePercentage(Math.round(progress));
+      const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
       setUploadSuccess(true)
       // toast.success("image updated success") 
 
@@ -66,7 +63,7 @@ e.preventDefault();
 try {
   // dispatch(updateUserStart());
 
-  const res = await fetch(`/api/user/update/${userData._id}`, {
+  const res = await fetch(`/api/user/update/${currentUser._id}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -93,6 +90,8 @@ const handleSignOut=()=>{
   navigate("/")
 }
 
+
+
   return (
     <>
   
@@ -106,7 +105,7 @@ const handleSignOut=()=>{
         <form className="space-y-4 md:space-y-3" onSubmit={handleUpdate}>
         <div className="flex justify-center flex-col items-center">
         <input onChange={(e) => setFile(e.target.files[0])} type="file" ref={fileRef} hidden accept="image/*"/>
-        <img onClick={() => fileRef.current.click()} src={formData.avatar || userData?.avatar}  alt="" className="w-1/4 rounded-full h-24" />
+        <img onClick={() => fileRef.current.click()} src={formData.avatar || currentUser?.avatar}  alt="" className="w-1/4 rounded-full h-24" />
         {uploadSuccess && formData ? 
       <p className="text-green-500 text-sm font-md"> Profile image updated successfully </p>
       :  
@@ -114,21 +113,17 @@ const handleSignOut=()=>{
       }
         </div>
           <div className="flex items-center gap-6">
-            <input type="text" name="username" id="username" value={userData?.username} readOnly    className="bg-gray-50 border border-gray-300 text-gray-400 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="username" required />
+            <input type="text" name="username" id="username" placeholder={currentUser?.username} onChange={handleChange}   className="bg-gray-50 border border-gray-300 text-gray-600 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
           </div>
           <div className="flex items-center gap-6">
-             <input type="email" name="email" id="email" value={userData?.email} readOnly className="bg-gray-50 border border-gray-300 text-gray-400 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" required />
-          </div>
-          <div className="flex items-center gap-6">
-            <input type="password" name="password" id="password" placeholder="password"  onChange={handleChange}  className="bg-gray-50 border-2 border-gray-500 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
-          </div>
-         
+             <input type="text"  value={currentUser?.phone.substr(3)} onChange={handleChange} className="bg-gray-50 border border-gray-300 text-cyan-600 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="e.g 9876543210" readOnly required />
+          </div> 
           <button type="submit" className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">UPDATE</button>
           <div className="flex gap-2">
            
             <Link to='/create-list'  className="w-full text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">CREATE LISTING</Link>
             
-          <Link to={`/view-list/${userData._id}`} className="w-full text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">VIEW LISTING</Link>
+          <Link to={`/view-list/${currentUser._id}`} className="w-full text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">VIEW LISTING</Link>
       
           </div>
             </form>

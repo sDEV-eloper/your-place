@@ -98,3 +98,40 @@ export const googleContinue = async (req, res, next) => {
     next(err);
   }
 };
+export const phoneAuth = async (req, res, next) => {
+  const { name, phone, photo } = req.body;
+  try {
+    const existingPhone = await User.findOne({ phone });
+    if (existingPhone) {
+      const token = jwt.sign(
+        { _id: existingPhone._id },
+        process.env.JWT_SECRET
+      );
+      const {...rest } = existingPhone._doc;
+      //save token inside cookie
+      res
+        .cookie(" access_token", token, { httpOnly: true })
+        .status(200)
+        .json(rest);
+    } else {
+      
+      const newUser = new User({
+        username:name,
+        phone,
+        avatar: photo,
+      });
+      console.log("Creating new user:", newUser);
+
+      await newUser.save();
+      const token = jwt.sign({ _id: newUser._id }, process.env.JWT_SECRET);
+      const {  ...rest } = newUser._doc;
+      //save token inside cookie
+      res
+        .cookie(" access_token", token, { httpOnly: true })
+        .status(200)
+        .json(rest);
+    }
+  } catch (err) {
+    next(err);
+  }
+};
