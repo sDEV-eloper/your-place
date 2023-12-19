@@ -42,9 +42,9 @@ if(searchTermFromUrl){
 <span className="cursor-pointer text-xl"><CiSearch /></span>
       </form>
       <nav className="w-1/4">
-        <ul className="flex gap-12 items-center text-[#3489a3] ">
-            <Link to='/'><li className="hover:font-medium cursor-pointer hidden sm:inline">Home</li></Link>
-            <Link to='/about'><li className="hover:font-medium cursor-pointer hidden sm:inline">About</li></Link>
+        <ul className="flex gap-12 items-center text-[#57cdd6] ">
+            <Link to='/'><li className="hover:underline cursor-pointer hidden sm:inline">Home</li></Link>
+            <Link to='/about'><li className="hover:underline cursor-pointer hidden sm:inline">About</li></Link>
            {!userData ?
             (<Link to="/sign-in">
             <li className="hover:font-medium cursor-pointer hidden sm:inline">Sign In</li>
@@ -52,9 +52,8 @@ if(searchTermFromUrl){
              : 
              (
               <div className="flex items-center gap-2">
-                <p className="text-sm">{userData.username} </p>
                 <Link to='/profile'>
-               { userData?.avatar ? <img src={userData?.avatar} className="w-8 rounded-full" alt="user" referrerPolicy="no-referrer"/>: <Avatar name={userData?.username} size={40} round="10px"/> }
+               { userData?.avatar ? <img src={userData?.avatar} className="w-8 h-8 rounded-full object-cover" alt="user" referrerPolicy="no-referrer"/>: <Avatar name={userData?.username} size={40} round="10px"/> }
                 </Link>
               </div>
             )

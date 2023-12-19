@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 const ViewList = () => {
   const navigate=useNavigate()
   const { currentUser } = useSelector((state) => state.user);
+  console.log("currentUser", currentUser)
   const [listData, setListData] = useState([]);
   const fetchListData = async () => {
     try {
@@ -16,6 +17,7 @@ const ViewList = () => {
       });
       const data = await response.json();
       setListData(data);
+      console.log("data----->",data)
     } catch (err) {
       console.log("Error in fetching data");
     }

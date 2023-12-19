@@ -4,7 +4,7 @@ import { MdLocationOn } from 'react-icons/md';
 export default function ListingItem({ listing }) {
   return (
     <div className='bg-white shadow-md hover:shadow-lg transition-shadow overflow-hidden rounded-lg w-full sm:w-[330px]'>
-      <Link to={`/listing/${listing._id}`}>
+      <Link to={`/listings/${listing._id}`}>
         <img
           src={
             listing.imageUrls[0] ||
@@ -27,11 +27,10 @@ export default function ListingItem({ listing }) {
             {listing.description}
           </p>
           <p className='text-slate-500 mt-2 font-semibold '>
-            $
-            {listing.offer
-              ? listing.discountPrice.toLocaleString('en-US')
-              : listing.regularPrice.toLocaleString('en-US')}
+            Rs. &nbsp;
+            { listing.regularPrice.toLocaleString('en-US')}
             {listing.type === 'rent' && ' / month'}
+            {listing.type !== 'rent' && ' For Sell'}
           </p>
           <div className='text-slate-700 flex gap-4'>
             <div className='font-bold text-xs'>
