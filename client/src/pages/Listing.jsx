@@ -54,12 +54,14 @@ export default function Listing() {
         <div >
           <div className='flex border rounded-2xl border-[#2771a7] bg-[#f1f9ff] flex-col max-w-4xl mx-auto p-3 my-7 gap-4'>
             <p className='text-2xl font-semibold'>
-              {listing.name} - Rs.{' '}
-              {listing.regularPrice.toLocaleString('en-US')}
-              {listing.type === 'rent' && ' / month'}
+              <p className='text-gray-500'>Owner: <span className='text-blue-800'> {listing.name}</span> </p> 
+               
+              {listing.type === 'rent' && 
+              <p className='text-gray-500'>Rent: <span className='text-red-500 text-xl' >Rs.{' '}
+              {listing.regularPrice.toLocaleString('en-US')} {'/month'}</span></p> }
               {listing.type !== 'rent' && ' For Sell'}
             </p>
-            <p className='flex items-center mt-6 gap-2 text-slate-600  text-sm'>
+            <p className='flex items-center mt-6 gap-2 text-green-600  text-lg'>
               <FaMapMarkerAlt className='text-green-700' />
               {listing.address}
             </p>
@@ -71,7 +73,7 @@ export default function Listing() {
             </div>
             <p className='text-slate-800'>
               <span className='font-semibold text-black'>Description - </span>
-              {listing.description}
+              <span className='text-blue-800'>{listing.description}</span>
             </p>
             <ul className='text-blue-800 font-semibold text-sm flex flex-wrap items-center gap-4 sm:gap-6'>
               <li className='flex items-center gap-1 whitespace-nowrap '>
