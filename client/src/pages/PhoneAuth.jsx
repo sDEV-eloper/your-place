@@ -151,11 +151,12 @@ const PhoneAuth = () => {
                     value={phoneNumber}
                     onChange={(e)=>setPhoneNumber(e.target.value)}
                     className="border w-full px-3 py-2 rounded-md focus:outline-none "
+                    placeholder="Enter 10 digit phone number"
                   />
                 </div>{" "}
                 <button
                   onClick={onSignup}
-                  className="w-full text-white bg-cyan-800 hover:bg-cyan-700 focus:ring-4 focus:outline-none focus:ring-cyan-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-cyan-600 dark:hover:bg-cyan-700 dark:focus:ring-cyan-800"
+                  className="w-full text-white bg-cyan-900 hover:bg-cyan-700 focus:ring-4 focus:outline-none focus:ring-cyan-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-cyan-600 dark:hover:bg-cyan-700 dark:focus:ring-cyan-800"
                 >
                  
                   <span className="text-center flex items-center justify-center">
