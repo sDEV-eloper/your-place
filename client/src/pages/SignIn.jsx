@@ -8,7 +8,7 @@ const SignIn = () => {
 
   return (
     <>
-    <section className="bg-[url('https://img.freepik.com/free-photo/close-up-woman-s-hand-giving-house-key-man-wooden-table_23-2148204009.jpg?w=996&t=st=1703006030~exp=1703006630~hmac=bfe2263683ce1c0bc5bed6f8e75a1a65f41a565880e637f29d4161981db3fe84')] dark:bg-gray-900 bg-cover ">
+    <section className="bg-[url('https://images.pexels.com/photos/4467735/pexels-photo-4467735.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2')] dark:bg-gray-900 bg-cover ">
   <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
     
     <div className="w-full backdrop-brightness-75 rounded-lg shadow-lg dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">

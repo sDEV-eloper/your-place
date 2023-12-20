@@ -22,8 +22,19 @@ const CreateList = () => {
         bedrooms:1,
         bathrooms:1,
         regularPrice:0,
+        doubleSharingPrice:0,
+        tripleSharingPrice:0,
         parking:false,
         furnished:false,
+        single:false,
+        double:false,
+        triple:false,
+        electricity:false,
+        kitchen:false,
+        girls:false,
+        boys:false,
+        security:false,
+        
     })
     console.log("img",images)
     console.log("form data",formData)
@@ -88,7 +99,7 @@ if(e.target.id==='sale'|| e.target.id==='rent'){
     type: e.target.id
   })
 }
-if(e.target.id==='parking'|| e.target.id==='furnished'){
+if(e.target.id==='parking'||  e.target.id==='furnished' || e.target.id==='security' || e.target.id==='kitchen'|| e.target.id==='electricity'|| e.target.id==='boys'|| e.target.id==='girls'|| e.target.id==='single'|| e.target.id==='double'|| e.target.id==='triple'){
   setFormData({
     ...formData, 
     [ e.target.id]: e.target.checked
@@ -122,6 +133,7 @@ const handleSubmit=async(e)=>{
         
     })
     const res=await data.json()
+    console.log("after ceated list, result", res)
     setLoading(false)
     toast.success("List Created")
     navigate(`/view-list/${res._id}`)
@@ -204,6 +216,86 @@ const handleSubmit=async(e)=>{
             <div className='flex gap-2'>
               <input
                 type='checkbox'
+                id='boys'
+                className='w-5'
+                onChange={handleChange}
+                checked={formData.boys}
+              />
+              <span>Boys</span>
+            </div>
+            <div className='flex gap-2'>
+              <input
+                type='checkbox'
+                id='girls'
+                className='w-5'
+                onChange={handleChange}
+                checked={formData.girls}
+              />
+              <span>Girls</span>
+            </div>
+            <div className='flex gap-2'>
+              <input
+                type='checkbox'
+                id='security'
+                className='w-5'
+                onChange={handleChange}
+                checked={formData.security}
+              />
+              <span>Security</span>
+            </div>
+            <div className='flex gap-2'>
+              <input
+                type='checkbox'
+                id='electricity'
+                className='w-5'
+                onChange={handleChange}
+                checked={formData.electricity}
+              />
+              <span>Electricity</span>
+            </div>
+            <div className='flex gap-2'>
+              <input
+                type='checkbox'
+                id='kitchen'
+                className='w-5'
+                onChange={handleChange}
+                checked={formData.kitchen}
+              />
+              <span>Kitchen</span>
+            </div>
+            <div className='flex gap-2'>
+              <input
+                type='checkbox'
+                id='single'
+                className='w-5'
+                onChange={handleChange}
+                checked={formData.single}
+              />
+              <span>Single </span>
+            </div>
+            <div className='flex gap-2'>
+              <input
+                type='checkbox'
+                id='double'
+                className='w-5'
+                onChange={handleChange}
+                checked={formData.double}
+              />
+              <span>Double Sharing</span>
+            </div>
+            <div className='flex gap-2'>
+              <input
+                type='checkbox'
+                id='triple'
+                className='w-5'
+                onChange={handleChange}
+                checked={formData.triple}
+              />
+              <span>3 Sharing</span>
+            </div>
+            <div className='flex gap-2'>
+              <input
+                type='checkbox'
                 id='furnished'
                 className='w-5'
                 onChange={handleChange}
@@ -243,7 +335,7 @@ const handleSubmit=async(e)=>{
               <input
                 type='number'
                 id='regularPrice'
-                min='50'
+                min='0'
                 max='10000000'
                 required
                 className='p-3 border border-gray-300 rounded-lg'
@@ -251,7 +343,37 @@ const handleSubmit=async(e)=>{
                 value={formData.regularPrice}
               />
               <div className='flex flex-col items-center'>
-                <p>Regular price</p>
+                <p>Single Price / Person</p>
+              </div>
+            </div>
+            <div className='flex items-center gap-2'>
+              <input
+                type='number'
+                id='doubleSharingPrice'
+                min='0'
+                max='10000000'
+                required
+                className='p-3 border border-gray-300 rounded-lg'
+                onChange={handleChange}
+                value={formData.doubleSharingPrice}
+              />
+              <div className='flex flex-col items-center'>
+                <p>Double Sharing Price / Person</p>
+              </div>
+            </div>
+            <div className='flex items-center gap-2'>
+              <input
+                type='number'
+                id='TripleSharingPrice'
+                min='0'
+                max='10000000'
+                required
+                className='p-3 border border-gray-300 rounded-lg'
+                onChange={handleChange}
+                value={formData.tripleSharingPrice}
+              />
+              <div className='flex flex-col items-center'>
+                <p>Triple Sharing Price / Person</p>
               </div>
             </div>
             
@@ -305,7 +427,7 @@ const handleSubmit=async(e)=>{
           <p className='text-red-700 text-sm'>{imageUploadError && imageUploadError }
           </p>
  
-          <button   className='p-3 bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 disabled:opacity-80'
+          <button type="submit"   className='p-3 bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 disabled:opacity-80'
           >
             {loading? 'Creating...' : 'Create List'}
           </button>

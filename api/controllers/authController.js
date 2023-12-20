@@ -42,7 +42,7 @@ export const signin = async (req, res, next) => {
       const { password: pass, ...rest } = validUser._doc;
       //save token inside cookie
       res
-        .cookie(" access_token", token, { httpOnly: true })
+        .cookie("access_token", token, { httpOnly: true })
         .status(200)
         .json(rest);
     } else {
@@ -67,7 +67,7 @@ export const googleContinue = async (req, res, next) => {
       const { password: pass, ...rest } = existingEmail._doc;
       //save token inside cookie
       res
-        .cookie(" access_token", token, { httpOnly: true })
+        .cookie("access_token", token, { httpOnly: true, maxAge: 365 * 24 * 60 * 60 * 1000})
         .status(200)
         .json(rest);
     } else {
@@ -90,8 +90,8 @@ export const googleContinue = async (req, res, next) => {
       const { password: pass, ...rest } = newUser._doc;
       //save token inside cookie
       res
-        .cookie(" access_token", token, { httpOnly: true })
-        .status(200)
+      .cookie("access_token", token, { httpOnly: true, maxAge: 365 * 24 * 60 * 60 * 1000})
+      .status(200)
         .json(rest);
     }
   } catch (err) {
