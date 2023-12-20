@@ -61,6 +61,7 @@ const PhoneAuth = () => {
     window.confirmationResult
       .confirm(otp)
       .then(async (res) => {
+        console.log(res)
         localStorage.setItem('access_token', res.user.accessToken);
         try
         {

@@ -126,6 +126,7 @@ const handleSubmit=async(e)=>{
     const data=await fetch('/api/list/create-list', {
       method:'POST',
       headers:{
+        'Authorization': `Bearer ${import.meta.env.VITE_ACCESS_TOKEN}`,
         'Content-Type':'application/json'
         },
         body:JSON.stringify({...formData,
