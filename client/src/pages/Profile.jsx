@@ -98,7 +98,7 @@ const handleSignOut=()=>{
   
         <section className="bg-[url('https://images.pexels.com/photos/1037992/pexels-photo-1037992.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2')] dark:bg-gray-900 bg-cover ">
   <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-    <div className="w-full border-2 border-gray-400 p-2 bg-white rounded-lg shadow-lg  md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 ">
+    <div className="w-full border p-2 bg-amber-50 rounded-lg shadow-lg  md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 ">
       <div className="p-6 space-y-4 md:space-y-2 sm:p-8">
         <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white text-center">
           PROFILE
@@ -106,7 +106,7 @@ const handleSignOut=()=>{
         <form className="space-y-4 md:space-y-3" onSubmit={handleUpdate}>
         <div className="flex justify-center flex-col items-center ">
         <input onChange={(e) => setFile(e.target.files[0])} type="file" ref={fileRef} hidden accept="image/*"/>
-        <img onClick={() => fileRef.current.click()} src={formData.avatar || currentUser?.avatar}  alt="" className="w-1/4  border-2  cursor-pointer hover:border-cyan-200 brightness-150 rounded-full border-gray-400 h-24" />
+        <img onClick={() => fileRef.current.click()} src={formData.avatar || currentUser?.avatar}  alt="" className="w-1/4  border  cursor-pointer hover:border-cyan-200 brightness-150 rounded-full border-gray-600 h-24" />
        <p className="underline text-xs text-gray-400 flex">Click on image to change<MdEdit /> </p>
         {uploadSuccess && formData ? 
       <p className="text-green-500 text-sm font-md"> Profile image updated successfully </p>
