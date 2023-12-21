@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { IoCall } from "react-icons/io5";
 import { FaKitchenSet, FaPerson, FaPeopleGroup, FaUser, FaMoneyBill, FaMoneyBill1Wave  } from "react-icons/fa6";
-
+import { CgUnavailable } from "react-icons/cg";
 import 'swiper/css/bundle';
 import {
   FaBath,
@@ -13,6 +13,7 @@ import {
   FaMale,
   FaMapMarkerAlt,
   FaParking,
+  FaRegCheckCircle,
   FaShare,
 } from 'react-icons/fa';
 import ImageSlider from './ImageSlider';
@@ -59,20 +60,21 @@ export default function Listing() {
       {listing && !loading && !error && (
         <div >
           <div className='flex border rounded-2xl border-[#2771a7] bg-[#f1f9ff] flex-col max-w-4xl mx-auto p-3 my-7 gap-4'>
-            <p className='text-xl font-semibold text-sky-500 '>
-              <span className='text-gray-500 text-xl'>Owner/House Name: &nbsp;</span>
-              {listing.name}
+            <p className='text-xl  text-gray-600 '>
+            Owner/House Name: 
+              <span className='text-sky-600 font-semibold text-xl'> {listing.name}</span>
+             
             </p>
             <ul className='flex flex-col gap-2'>
-            <p className='text-lg font-semibold text-red-500 '>Monthly Rate</p>
+            <p className='text-lg font-semibold text-red-500 uppercase '>Monthly Rent</p>
               { listing.regularPrice>0 &&
               <li>
               <p className='text-md text-cyan-700 font-semibold '>
               <span className='text-gray-500 text-md'>Single: &nbsp;</span>
               &#8377;
               {listing.regularPrice.toLocaleString('en-US')}
-              {'/Person'}
-              {listing.type !== 'rent' && ' For Sell'}
+              <span className='text-red-600'>{' / Person'}</span>
+             
             </p>
               </li>}
 
@@ -80,11 +82,11 @@ export default function Listing() {
               {listing.doubleSharingPrice>0 &&
                 <li>
               <p className='text-md text-cyan-700 font-semibold '>
-              <span className='text-gray-500 text-md'>2-Sharing: &nbsp;</span>
+              <span className='text-gray-500 text-md'>Double-Sharing: &nbsp;</span>
               &#8377;
               {listing.doubleSharingPrice.toLocaleString('en-US')}
-              {'/Person'}
-              {listing.type !== 'rent' && ' For Sell'}
+              <span className='text-red-600'>{' / Person'}</span>
+             
             </p>
               </li>
               }
@@ -92,11 +94,10 @@ export default function Listing() {
 
               {listing.tripleSharingPrice>0 && <li>
               <p className='text-md text-cyan-700 font-semibold '>
-              <span className='text-gray-500 text-md'> 3-Sharing: &nbsp;</span>
+              <span className='text-gray-500 text-md'> Triple-Sharing: &nbsp;</span>
               &#8377;
               {listing.tripleSharingPrice.toLocaleString('en-US')}
-              {'/Person'}
-              {listing.type !== 'rent' && ' For Sell'}
+              <span className='text-red-600'>{' / Person'}</span>
             </p>
               </li>}
             </ul>
@@ -106,8 +107,14 @@ export default function Listing() {
               {listing.address}
             </p>
             <div className='flex gap-4'>
-              <p className='bg-green-700 w-full max-w-[200px] text-white text-center p-1 rounded-md'>
-                {listing.type === 'rent' ? 'For Rent' : 'For Sale'}
+              <p className=' w-full max-w-[200px] text-white text-center rounded-lg'>
+                
+
+                {listing.type === 'avail' ?
+                <span className='flex items-center justify-center  gap-2 bg-green-600 rounded p-1'>< FaRegCheckCircle className='text-xl' /> Available</span>
+                 : 
+                 <span  className='flex items-center justify-center gap-2 bg-red-700 rounded p-1' ><CgUnavailable className='text-xl' />Not Available</span>
+                 }
               </p>
             
             </div>

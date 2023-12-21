@@ -5,10 +5,10 @@ import jwt from "jsonwebtoken";
 
 export const signup = async (req, res, next) => {
   console.log(req.body);
-  const { username, email, password } = req.body;
+  const { username, email, password, phone } = req.body;
   const hashedPassword = bcrypt.hashSync(password, 10);
   //save to database
-  const newUser = new User({ username, email, password: hashedPassword });
+  const newUser = new User({ username, email, phone, password: hashedPassword });
   try {
     const existingEmail = await User.findOne({ email });
     const existingUsername = await User.findOne({ username });
@@ -42,7 +42,7 @@ export const signin = async (req, res, next) => {
       const { password: pass, ...rest } = validUser._doc;
       //save token inside cookie
       res
-        .cookie("access_token", token, { httpOnly: true })
+        .cookie(" access_token", token, { httpOnly: true })
         .status(200)
         .json(rest);
     } else {
@@ -54,7 +54,7 @@ export const signin = async (req, res, next) => {
 };
 
 //continue with google
-export const googleContinue = async (req, res, next) => {
+export const googleAuth = async (req, res, next) => {
   const { email, name, photo } = req.body;
   // console.log('photo url', photo)
   try {
@@ -67,7 +67,7 @@ export const googleContinue = async (req, res, next) => {
       const { password: pass, ...rest } = existingEmail._doc;
       //save token inside cookie
       res
-        .cookie("access_token", token, { httpOnly: true, maxAge: 365 * 24 * 60 * 60 * 1000})
+        .cookie(" access_token", token, { httpOnly: true })
         .status(200)
         .json(rest);
     } else {
@@ -88,43 +88,6 @@ export const googleContinue = async (req, res, next) => {
       await newUser.save();
       const token = jwt.sign({ _id: newUser._id }, process.env.JWT_SECRET);
       const { password: pass, ...rest } = newUser._doc;
-      //save token inside cookie
-      res
-      .cookie("access_token", token, { httpOnly: true, maxAge: 365 * 24 * 60 * 60 * 1000})
-      .status(200)
-        .json(rest);
-    }
-  } catch (err) {
-    next(err);
-  }
-};
-export const phoneAuth = async (req, res, next) => {
-  const { name, phone, photo } = req.body;
-  try {
-    const existingPhone = await User.findOne({ phone });
-    if (existingPhone) {
-      const token = jwt.sign(
-        { _id: existingPhone._id },
-        process.env.JWT_SECRET
-      );
-      const {...rest } = existingPhone._doc;
-      //save token inside cookie
-      res
-        .cookie(" access_token", token, { httpOnly: true })
-        .status(200)
-        .json(rest);
-    } else {
-      
-      const newUser = new User({
-        username:name,
-        phone,
-        avatar: photo,
-      });
-      console.log("Creating new user:", newUser);
-
-      await newUser.save();
-      const token = jwt.sign({ _id: newUser._id }, process.env.JWT_SECRET);
-      const {  ...rest } = newUser._doc;
       //save token inside cookie
       res
         .cookie(" access_token", token, { httpOnly: true })

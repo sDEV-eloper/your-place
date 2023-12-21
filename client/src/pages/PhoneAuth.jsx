@@ -5,19 +5,16 @@ import { useState } from "react";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import { toast, Toaster } from "react-hot-toast";
 import { auth } from "../firebase";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { signInSuccess } from "../assets/redux/userSlice/userSlice";
+import { FaRegCheckCircle } from "react-icons/fa";
 
-const PhoneAuth = () => {
+const PhoneAuth = ({phone, setPhone, countryCode, setCountryCode, user, setUser}) => {
   const [otp, setOtp] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
+
   const [loading, setLoading] = useState(false);
   const [showOTP, setShowOTP] = useState(false);
-  const [user, setUser] = useState(null);
-  const [countryCode, setCountryCode] = useState("+91");
-  const navigate =useNavigate()
-  const dispatch=useDispatch()
+ 
+
+
 
 
   function onCaptchaVerify() {
@@ -41,7 +38,7 @@ const PhoneAuth = () => {
 
     const appVerifier = window.recaptchaVerifier;
 
-    const formatPh = countryCode + phoneNumber;
+    const formatPh = countryCode + phone;
 
     signInWithPhoneNumber(auth, formatPh, appVerifier)
       .then((confirmationResult) => {
@@ -61,39 +58,15 @@ const PhoneAuth = () => {
     window.confirmationResult
       .confirm(otp)
       .then(async (res) => {
-        console.log(res)
-        localStorage.setItem('access_token', res.user.accessToken);
-        try
-        {
-     
-            const  result= await fetch('/api/auth/phone', {
-                method: 'POST',
-                headers: {
-                    'Content-Type':'application/json'
-                }, 
-                body: JSON.stringify({
-                    name:'User',
-                    phone:res?.user?.phoneNumber, 
-                    photo: import.meta.env.VITE_PROFILE_IMAGE      
-            })
-        })
-        const data=await result.json()
-        console.log("data for new user mode----->", data)
-        setUser(res.user); 
-        setLoading(false);
-        toast.success(`Login in successfully`); 
-        dispatch(signInSuccess(data))
-        navigate('/')
-        }
-        catch(err){
-            console.log("Couldn't sign in", err)
-        }
-        
-    
+        console.log("res after verify",res)
+        setUser(res.user)
+        setPhone(res.user.phone)
+        toast.success("Verified")
       })
       .catch((err) => {
         console.log(err);
         setLoading(false);
+        toast.error("Not Verified")
       });
   }
 
@@ -103,17 +76,50 @@ const PhoneAuth = () => {
         <Toaster toastOptions={{ duration: 4000 }} />
         <div id="recaptcha-container"></div>
         {user ? (
-          <h2 className="text-center  font-medium text-2xl">👍Login Success</h2>
+           <div className="flex">
+           <div className=" w-5/6 flex gap-1   h-11 ">
+             <input
+               type="text"
+               id="countryCode"
+               name="countryCode"
+               value={countryCode}
+               onChange={(e)=>setCountryCode(e.target.value)}
+               className="border w-2/6 text-sm px-3 bg-slate-200  rounded-md focus:outline-none "
+               placeholder="Code"
+             />
+             <input
+               type="text"
+               id="phone"
+               name="phone"
+               value={user.phoneNumber.substr(3)}
+               onChange={(e)=>setPhone(e.target.value)}
+               className="border w-full px-3 text-green-600 py-2 rounded-md focus:outline-none "
+               placeholder="Enter 10 digit phone number"
+             />
+           </div>{" "}
+           <button
+             onClick={onSignup}
+             className="w-1/6 h-11 ml-1 text-white bg-green-600 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-cyan-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-cyan-600 dark:hover:bg-cyan-700 dark:focus:ring-cyan-800"
+           >
+            
+             {!user ?
+             (<span className="text-center flex items-center justify-center">
+             {loading ? (
+               <CgSpinner size={20} className=" animate-spin" />
+             ):
+               'Verify'
+               }</span>):
+               (<span className="text-center text-white-600 flex items-center justify-center">
+                 <FaRegCheckCircle size={20}/>
+              </span>)
+            }
+           </button>
+         </div>
         ) : (
           <div className="w-full flex flex-col gap-2 rounded-lg ">
-            {showOTP ? (
-              <>
-                <label
-                  htmlFor="otp"
-                  className="font-bold text-xl  text-center text-gray-600"
-                >
-                  Enter your OTP
-                </label>
+            { showOTP ? (
+              <div className="flex items-center justify-center">
+                
                 <OtpInput
                   value={otp}
                   onChange={setOtp}
@@ -126,46 +132,52 @@ const PhoneAuth = () => {
                 ></OtpInput>
                 <button
                   onClick={onOTPVerify}
-                  className="bg-emerald-600 w-full flex gap-1 items-center justify-center py-2.5 text-white rounded"
+                  className="bg-emerald-600 w-full flex gap-1 h-11 items-center justify-center py-2.5 text-white rounded"
                 >
                   {loading && (
                     <CgSpinner size={20} className="mt-1 animate-spin" />
                   )}
-                  <span>Verify OTP</span>
+                  <span className="text-sm">Verify OTP</span>
                 </button>
-              </>
+              </div>
             ) : (
-              <div >
-                <div className=" w-full flex  gap-1 h-12 mb-4">
+              <div className="flex">
+                <div className=" w-5/6 flex gap-1   h-11 ">
                   <input
                     type="text"
                     id="countryCode"
                     name="countryCode"
                     value={countryCode}
                     onChange={(e)=>setCountryCode(e.target.value)}
-                    className="border w-[20%] px-3 bg-slate-200  rounded-md focus:outline-none "
+                    className="border w-2/6 text-sm px-3 bg-slate-200  rounded-md focus:outline-none "
                   />
                   <input
                     type="text"
-                    id="phoneNumber"
-                    name="phoneNumber"
-                    value={phoneNumber}
-                    onChange={(e)=>setPhoneNumber(e.target.value)}
+                    id="phone"
+                    name="phone"
+                    value={phone}
+                    onChange={(e)=>setPhone(e.target.value)}
                     className="border w-full px-3 py-2 rounded-md focus:outline-none "
+                    maxLength='10'
                     placeholder="Enter 10 digit phone number"
                   />
                 </div>{" "}
                 <button
                   onClick={onSignup}
-                  className="w-full text-white bg-cyan-900 hover:bg-cyan-700 focus:ring-4 focus:outline-none focus:ring-cyan-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-cyan-600 dark:hover:bg-cyan-700 dark:focus:ring-cyan-800"
+                  className="w-1/6 h-11 ml-1 text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-cyan-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-cyan-600 dark:hover:bg-cyan-700 dark:focus:ring-cyan-800"
                 >
                  
-                  <span className="text-center flex items-center justify-center">
+                  {!user ?
+                  (<span className="text-center flex items-center justify-center">
                   {loading ? (
                     <CgSpinner size={20} className=" animate-spin" />
                   ):
-                    'Continue'
-                    }</span>
+                    'Verify'
+                    }</span>):
+                    (<span className="text-center text-white-600 flex items-center justify-center">
+                      <FaRegCheckCircle size={20}/>
+                   </span>)
+                 }
                 </button>
               </div>
             )}

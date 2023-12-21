@@ -18,7 +18,7 @@ const CreateList = () => {
         name: '',
         description:'',
         address:'',
-        type:'rent',
+        type:'available',
         bedrooms:1,
         bathrooms:1,
         regularPrice:0,
@@ -93,7 +93,7 @@ const handleRemoveImage=(index)=>{
 
 const handleChange=(e)=>{
 
-if(e.target.id==='sale'|| e.target.id==='rent'){
+if(e.target.id==='available'|| e.target.id==='unavailable'){
   setFormData({
     ...formData, 
     type: e.target.id
@@ -126,7 +126,6 @@ const handleSubmit=async(e)=>{
     const data=await fetch('/api/list/create-list', {
       method:'POST',
       headers:{
-        'Authorization': `Bearer ${import.meta.env.VITE_ACCESS_TOKEN}`,
         'Content-Type':'application/json'
         },
         body:JSON.stringify({...formData,
@@ -187,22 +186,22 @@ const handleSubmit=async(e)=>{
             <div className='flex gap-2'>
               <input
                 type='checkbox'
-                id='sale'
+                id='available'
                 className='w-5'
                 onChange={handleChange}
-            checked={formData.type==='sale'}
+            checked={formData.type==='available'}
               />
-              <span>Sell</span>
+              <span>Available</span>
             </div>
             <div className='flex gap-2'>
               <input
                 type='checkbox'
-                id='rent'
+                id='unavailable'
                 className='w-5'
                 onChange={handleChange}
-            checked={formData.type==='rent'}
+            checked={formData.type==='unavailable'}
               />
-              <span>Rent</span>
+              <span>Unavailable</span>
             </div>
             <div className='flex gap-2'>
               <input

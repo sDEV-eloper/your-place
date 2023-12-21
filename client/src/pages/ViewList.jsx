@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { IoAdd } from "react-icons/io5";
+
 
 const ViewList = () => {
   const navigate=useNavigate()
@@ -48,6 +50,8 @@ const ViewList = () => {
 
 
   return (
+  <>
+   { listData.length!==0 ?
     <div className="flex flex-wrap">
       {listData.map((item) => (
         <div
@@ -80,6 +84,15 @@ const ViewList = () => {
         </div>
       ))}
     </div>
+    :
+  <div className='p-4 h-screen text-gray-500  flex flex-col items-center gap-8 justify-center text-6xl border rounded font-md'>
+    <span>Sorry! Lists Not Found...</span>
+    <button onClick={()=>{navigate('/create-list')}} className="bg-cyan-800 hover:bg-cyan-600 flex gap-2 items-center px-4 text-lg font-sm text-white rounded p-2 w-1/3 justify-center">Create List
+    <IoAdd/>
+    </button>
+  </div>
+  
+  }</>
   );
 };
 

@@ -11,6 +11,7 @@ import ViewList from './pages/ViewList'
 import UpdateList from './pages/UpdateList'
 import Listing from './pages/Listing'
 import Search from './pages/Search'
+import SignUp from './pages/SignUp'
 
 
 
@@ -32,6 +33,7 @@ export default function App() {
         <Route path="/update-list/:id" element={<UpdateList/>}/>
         </Route>
         <Route path="/sign-in" element={<SignIn/>}/>
+        <Route path="/sign-up" element={<SignUp/>}/>
       </Routes>
     </BrowserRouter>
   )
