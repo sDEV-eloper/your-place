@@ -119,7 +119,8 @@ const handleSubmit=async(e)=>{
   e.preventDefault();
   try{
       if(formData.imageUrls.length<1){
-        return  setError("Must have alteast 1 image")
+        toast.error("Must have atleast 1 image")
+        return;
       }
     setLoading(true)
     setError(false)
@@ -149,7 +150,7 @@ const handleSubmit=async(e)=>{
   return (
     <main className='p-3 max-w-4xl mx-auto'>
       <h1 className='text-3xl font-semibold text-center my-7'>
-        Create a Listing
+        Create Your Rental House List
       </h1>
       <form className='flex flex-col sm:flex-row gap-4' onSubmit={handleSubmit}>
         <div className='flex flex-col gap-4 flex-1'>
@@ -271,7 +272,7 @@ const handleSubmit=async(e)=>{
                 onChange={handleChange}
                 checked={formData.single}
               />
-              <span>Single </span>
+              <span>For Single </span>
             </div>
             <div className='flex gap-2'>
               <input
@@ -281,7 +282,7 @@ const handleSubmit=async(e)=>{
                 onChange={handleChange}
                 checked={formData.double}
               />
-              <span>Double Sharing</span>
+              <span>2-Sharing</span>
             </div>
             <div className='flex gap-2'>
               <input
@@ -291,7 +292,7 @@ const handleSubmit=async(e)=>{
                 onChange={handleChange}
                 checked={formData.triple}
               />
-              <span>3 Sharing</span>
+              <span>3-Sharing</span>
             </div>
             <div className='flex gap-2'>
               <input
@@ -331,26 +332,28 @@ const handleSubmit=async(e)=>{
               />
               <p>Baths</p>
             </div>
+              {formData.single&&
             <div className='flex items-center gap-2'>
               <input
                 type='number'
                 id='regularPrice'
-                min='0'
+                min='500'
                 max='10000000'
                 required
                 className='p-3 border border-gray-300 rounded-lg'
                 onChange={handleChange}
                 value={formData.regularPrice}
               />
-              <div className='flex flex-col items-center'>
-                <p>Single Price / Person</p>
+                <div className='flex flex-col items-center'>
+                <p> Rent for Single Person </p>
               </div>
-            </div>
+            </div>}
+           {formData.double &&
             <div className='flex items-center gap-2'>
               <input
                 type='number'
                 id='doubleSharingPrice'
-                min='0'
+                min='500'
                 max='10000000'
                 required
                 className='p-3 border border-gray-300 rounded-lg'
@@ -358,14 +361,17 @@ const handleSubmit=async(e)=>{
                 value={formData.doubleSharingPrice}
               />
               <div className='flex flex-col items-center'>
-                <p>Double Sharing Price / Person</p>
+                <p>Double-Sharing Rent  <span className="text-red-500">{'(per Person)'}</span></p>
               </div>
             </div>
-            <div className='flex items-center gap-2'>
+            }
+
+           { formData.triple &&
+           <div className='flex items-center gap-2'>
               <input
                 type='number'
-                id='TripleSharingPrice'
-                min='0'
+                id='tripleSharingPrice'
+                min='500'
                 max='10000000'
                 required
                 className='p-3 border border-gray-300 rounded-lg'
@@ -373,9 +379,9 @@ const handleSubmit=async(e)=>{
                 value={formData.tripleSharingPrice}
               />
               <div className='flex flex-col items-center'>
-                <p>Triple Sharing Price / Person</p>
+                <p>Triple-Sharing Rent  <span className="text-red-500">{'(per Person)'}</span></p>
               </div>
-            </div>
+            </div>}
             
           </div>
         </div>
