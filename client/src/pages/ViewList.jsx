@@ -51,6 +51,7 @@ const ViewList = () => {
 
   return (
   <>
+  <h1 className="text-4xl text-gray-600 text-center my-4  border-b-2 py-2 font-bold">Your Rental Lists</h1>
    { listData.length!==0 ?
     <div className="flex flex-wrap">
       {listData.map((item) => (
