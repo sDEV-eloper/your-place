@@ -106,7 +106,7 @@ const handleSignOut=()=>{
         <form className="space-y-4 md:space-y-3" onSubmit={handleUpdate}>
         <div className="flex justify-center flex-col items-center">
         <input onChange={(e) => setFile(e.target.files[0])} type="file" ref={fileRef} hidden accept="image/*"/>
-        <img onClick={() => fileRef.current.click()} src={formData.avatar || userData?.avatar}  alt="" className="w-1/4 rounded-full h-24" />
+        <img onClick={() => fileRef.current.click()} src={userData?.avatar || formData.avatar }  alt="" className="w-1/4 rounded-full h-24" />
         {uploadSuccess && formData ? 
       <p className="text-green-500 text-sm font-md"> Profile image updated successfully </p>
       :  
@@ -114,13 +114,16 @@ const handleSignOut=()=>{
       }
         </div>
           <div className="flex items-center gap-6">
-            <input type="text" name="username" id="username" value={userData?.username} readOnly    className="bg-gray-50 border border-gray-300 text-gray-400 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="username" required />
+            <input type="text" name="username" id="username" value={userData?.username} readOnly    className="bg-gray-50 border border-gray-300 text-gray-400 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  />
           </div>
           <div className="flex items-center gap-6">
-             <input type="email" name="email" id="email" value={userData?.email} readOnly className="bg-gray-50 border border-gray-300 text-gray-400 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" required />
+             <input type="email" name="email" id="email" value={userData?.email} readOnly className="bg-gray-50 border border-gray-300 text-gray-400 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
           </div>
           <div className="flex items-center gap-6">
-            <input type="password" name="password" id="password" placeholder="password"  onChange={handleChange}  className="bg-gray-50 border-2 border-gray-500 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+             <input type="phone" name="phone" id="phone" value={userData?.phone.substr(3)} readOnly className="bg-gray-50 border border-gray-300 text-gray-400 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"   />
+          </div>
+          <div className="flex items-center gap-6">
+            <input type="password" name="password" id="password" placeholder="password"  onChange={handleChange}  className="bg-gray-50 border-2 border-gray-500 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  />
           </div>
          
           <button type="submit" className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">UPDATE</button>

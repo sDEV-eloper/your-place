@@ -22,8 +22,8 @@ const OAuth = () => {
                 }, 
                 body: JSON.stringify({
                     name:result?.user?.displayName,
-                    email:result?.user?.email,
-                    photo: result?.user?.photoURL,
+                    phone:result?.user?.phone,
+                    
             })
         })
         const data=await res.json()

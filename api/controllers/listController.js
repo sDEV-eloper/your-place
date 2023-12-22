@@ -14,6 +14,7 @@ next(err)
 
 export const getList=async(req, res, next)=>{
 
+
 try{
      if(req.user._id != req.params.id){
         return next(errorHandler(401, "Only view your own listing"))
@@ -96,7 +97,7 @@ export const getAllList= async (req, res, next) => {
       let type = req.query.type;
   
       if (type === undefined || type === 'all') {
-        type = { $in: ['sale', 'rent'] };
+        type = { $in: ['available', 'unavailable'] };
       }
   
       const searchTerm = req.query.searchTerm || '';

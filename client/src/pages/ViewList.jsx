@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { IoAdd } from "react-icons/io5";
+import { list } from "firebase/storage";
+
 
 const ViewList = () => {
   const navigate=useNavigate()
   const { currentUser } = useSelector((state) => state.user);
-  console.log("currentUser", currentUser)
+  console.log("view list currentUser", currentUser)
   const [listData, setListData] = useState([]);
   const fetchListData = async () => {
     try {
@@ -15,9 +18,10 @@ const ViewList = () => {
           "Content-Type": "application/json",
         },
       });
+      console.log("response in view list--", response)
       const data = await response.json();
       setListData(data);
-      console.log("data----->",data)
+      console.log("list data in view list----->",listData)
     } catch (err) {
       console.log("Error in fetching data");
     }
@@ -48,6 +52,10 @@ const ViewList = () => {
 
 
   return (
+  <>
+  <h1 className="text-4xl text-gray-600 text-center my-4  border-b-2 py-2 font-bold">Your Rental Lists</h1>
+  {console.log("listdata len", listData.length)}
+   { listData.length ?
     <div className="flex flex-wrap">
       {listData.map((item) => (
         <div
@@ -80,6 +88,15 @@ const ViewList = () => {
         </div>
       ))}
     </div>
+    :
+  <div className='p-4 h-screen text-gray-500  flex flex-col items-center gap-8 justify-center text-6xl border rounded font-md'>
+    <span>Sorry! Lists Not Found...</span>
+    <button onClick={()=>{navigate('/create-list')}} className="bg-cyan-800 hover:bg-cyan-600 flex gap-2 items-center px-4 text-lg font-sm text-white rounded p-2 w-1/3 justify-center">Create List
+    <IoAdd/>
+    </button>
+  </div>
+  
+  }</>
   );
 };
 

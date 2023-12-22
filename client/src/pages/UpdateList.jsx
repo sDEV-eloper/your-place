@@ -98,13 +98,13 @@ const handleRemoveImage=(index)=>{
 
 const handleChange=(e)=>{
 
-if(e.target.id==='sale'|| e.target.id==='rent'){
+if(e.target.id==='available'|| e.target.id==='unavailable'){
   setFormData({
     ...formData, 
     type: e.target.id
   })
 }
-if(e.target.id==='parking'|| e.target.id==='furnished'){
+if(e.target.id==='parking'||  e.target.id==='furnished' || e.target.id==='security' || e.target.id==='kitchen'|| e.target.id==='electricity'|| e.target.id==='boys'|| e.target.id==='girls'|| e.target.id==='single'|| e.target.id==='double'|| e.target.id==='triple'){
   setFormData({
     ...formData, 
     [ e.target.id]: e.target.checked
