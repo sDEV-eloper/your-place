@@ -7,8 +7,8 @@ const firebaseConfig = {
   authDomain: "yourplace-5cd5b.firebaseapp.com",
   projectId: "yourplace-5cd5b",
   storageBucket: "yourplace-5cd5b.appspot.com",
-  messagingSenderId: import.meta.env.VITE_FIREBASE_SENDER_ID,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID
+  messagingSenderId: "590872177820",
+  appId: "1:590872177820:web:1e90e384270a8444291159"
 };
 
 // Initialize Firebase
