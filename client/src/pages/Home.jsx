@@ -14,7 +14,7 @@ export default function Home() {
   
     const fetchAvailableRentListings = async () => {
       try {
-        const res = await fetch('/api/list/get?type=available&limit=4');
+        const res = await fetch('/api/list/get?type=available&limit=100');
         const data = await res.json();
         setAvailListings(data);
         fetchUnavailableListings();

@@ -14,6 +14,7 @@ next(err)
 
 export const getList=async(req, res, next)=>{
 
+
 try{
      if(req.user._id != req.params.id){
         return next(errorHandler(401, "Only view your own listing"))
