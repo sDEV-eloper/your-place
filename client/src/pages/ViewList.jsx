@@ -7,7 +7,7 @@ import { IoAdd } from "react-icons/io5";
 const ViewList = () => {
   const navigate=useNavigate()
   const { currentUser } = useSelector((state) => state.user);
-  console.log("currentUser", currentUser)
+  console.log("view list currentUser", currentUser)
   const [listData, setListData] = useState([]);
   const fetchListData = async () => {
     try {

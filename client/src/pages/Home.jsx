@@ -7,42 +7,32 @@ import { IoCall } from "react-icons/io5";
 import ListingItem from '../components/ListingItem';
 
 export default function Home() {
-  const [offerListings, setOfferListings] = useState([]);
-  const [saleListings, setSaleListings] = useState([]);
-  const [rentListings, setRentListings] = useState([]);
+  const [unavailableListings, setUnavailableListings] = useState([]);
+  const [availListings, setAvailListings] = useState([]);
 
   useEffect(() => {
-    const fetchOfferListings = async () => {
+  
+    const fetchAvailableRentListings = async () => {
       try {
-        const res = await fetch('/api/list/get?limit=4');
+        const res = await fetch('/api/list/get?type=available&limit=4');
         const data = await res.json();
-        setOfferListings(data);
-        fetchRentListings();
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    const fetchRentListings = async () => {
-      try {
-        const res = await fetch('/api/list/get?type=rent&limit=4');
-        const data = await res.json();
-        setRentListings(data);
-        fetchSaleListings();
+        setAvailListings(data);
+        fetchUnavailableListings();
       } catch (error) {
         console.log(error);
       }
     };
 
-    const fetchSaleListings = async () => {
+    const fetchUnavailableListings = async () => {
       try {
-        const res = await fetch('/api/list/get?type=sale&limit=4');
+        const res = await fetch('/api/list/get?type=unavailable&limit=4');
         const data = await res.json();
-        setSaleListings(data);
+        setUnavailableListings(data);
       } catch (error) {
         console.log(error);
       }
     };
-    fetchOfferListings();
+    fetchAvailableRentListings();
   }, []);
   return (
     <div>
@@ -84,40 +74,28 @@ export default function Home() {
       {/* listing results for offer, sale and rent */}
 
       <div className='max-w-6xl mx-auto p-3 flex flex-col gap-8 my-10'>
-        {offerListings && offerListings.length > 0 && (
-          <div className=''>
-            <div className='my-3'>
-              <h2 className='text-2xl font-semibold text-slate-600'>Recent offers</h2>
-              <Link className='text-sm text-blue-800 hover:underline' to={'/search?offer=true'}>Show more offers</Link>
-            </div>
-            <div className='flex flex-wrap gap-4'>
-              {offerListings.map((listing) => (
-                <ListingItem listing={listing} key={listing._id} />
-              ))}
-            </div>
-          </div>
-        )}
-        {rentListings && rentListings.length > 0 && (
+     
+        {availListings &&availListings.length > 0 && (
           <div className=''>
             <div className='my-3'>
               <h2 className='text-2xl font-semibold text-slate-600'>Recent places for rent</h2>
               <Link className='text-sm text-blue-800 hover:underline' to={'/search?type=rent'}>Show more places for rent</Link>
             </div>
             <div className='flex flex-wrap gap-4'>
-              {rentListings.map((listing) => (
+              {availListings.map((listing) => (
                 <ListingItem listing={listing} key={listing._id} />
               ))}
             </div>
           </div>
         )}
-        {saleListings && saleListings.length > 0 && (
+        {unavailableListings && unavailableListings.length > 0 && (
           <div className=''>
             <div className='my-3'>
               <h2 className='text-2xl font-semibold text-slate-600'>Recent places for sale</h2>
               <Link className='text-sm text-blue-800 hover:underline' to={'/search?type=sale'}>Show more places for sale</Link>
             </div>
             <div className='flex flex-wrap gap-4'>
-              {saleListings.map((listing) => (
+              {unavailableListings.map((listing) => (
                 <ListingItem listing={listing} key={listing._id} />
               ))}
             </div>

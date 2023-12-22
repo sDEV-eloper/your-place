@@ -167,10 +167,9 @@ const handleSubmit=async(e)=>{
                  />
           <textarea
             type='text'
-            placeholder='Description'
+            placeholder='Description(Optional)'
             className='border p-3 rounded-lg'
             id='description'
-            required
             onChange={handleChange}
             value={formData.description}
           />
