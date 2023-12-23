@@ -12,7 +12,7 @@ const ViewList = () => {
   const [listData, setListData] = useState([]);
   const fetchListData = async () => {
     try {
-      const response = await fetch(`/api/list/get-list/${currentUser._id}`, {
+      const response = await fetch(`/api/list/get-list/${currentUser?._id}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

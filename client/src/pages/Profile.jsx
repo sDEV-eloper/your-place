@@ -102,7 +102,7 @@ try {
         <form className="space-y-4 md:space-y-3" onSubmit={handleUpdate}>
         <div className="flex justify-center flex-col items-center">
         <input onChange={(e) => setFile(e.target.files[0])} type="file" ref={fileRef} hidden accept="image/*"/>
-        <img onClick={() => fileRef.current.click()} src={userData?.avatar || formData.avatar }  alt="" className="w-1/4 rounded-full h-24" />
+        <img onClick={() => fileRef.current.click()} src={userData?.avatar || formData?.avatar }  alt="" className="w-1/4 rounded-full h-24" />
         {uploadSuccess && formData ? 
       <p className="text-green-500 text-sm font-md"> Profile image updated successfully </p>
       :  

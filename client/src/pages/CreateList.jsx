@@ -130,7 +130,7 @@ const handleSubmit=async(e)=>{
         'Content-Type':'application/json'
         },
         body:JSON.stringify({...formData,
-          userRef: currentUser._id} )
+          userRef: currentUser?._id} )
         
     })
     const res=await data.json()

@@ -213,7 +213,7 @@ if(searchTermFromUrl){
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt={currentUser?.username} src={currentUser.avatar} sx={{ border: '2px solid white' }} />
+                <Avatar alt={currentUser?.username} src={currentUser?.avatar} sx={{ border: '2px solid white' }} />
               </IconButton>
             </Tooltip>
            
@@ -234,7 +234,7 @@ if(searchTermFromUrl){
               onClose={handleCloseUserMenu}
             >
               {currentUser ?
-              userSettings.map((setting) => (
+              userSettings?.map((setting) => (
                 <MenuItem key={setting} onClick={setting==="Signout"?handleSignOut:null}>
                   <Link to={setting==='Profile'? '/profile':null}>
                   <Typography  textAlign="center"  sx={setting === "Username" ? { color: 'gray', } :(setting === "Signout" ?{ color: 'white', p:1, borderRadius:'5px', backgroundColor:'red' } : '')} >

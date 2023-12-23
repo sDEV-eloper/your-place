@@ -245,7 +245,7 @@ export default function Listing() {
             <ImageSlider images={listing.imageUrls} />
             <div className="flex items-center justify-center gap-1 w-full">
               <p className="w-4/6 border text-center p-2 text-lg text-gray-600 font md rounded-l-lg bg-gray-200">{currentUser?.phone.slice(0,3)}-{currentUser?.phone.slice(3,13)} </p>
-              <a href={`tel:${currentUser.phone}`} className="w-2/6">
+              <a href={`tel:${currentUser?.phone}`} className="w-2/6">
                 <button
                   onClick={() => setContact(true)}
                   className="bg-blue-900 text-white rounded-r-lg uppercase hover:opacity-95 p-2 w-full"
