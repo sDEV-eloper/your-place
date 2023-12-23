@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux"
 import {getDownloadURL, getStorage, ref, uploadBytesResumable} from 'firebase/storage'
 import {app} from '../firebase.js'
 import toast from 'react-hot-toast'
-import { updateUserFailure, updateUserSuccess, signOutSuccess } from "../assets/redux/userSlice/userSlice.js"
-import { Link, useNavigate } from "react-router-dom"
+import { updateUserFailure, updateUserSuccess } from "../assets/redux/userSlice/userSlice.js"
+import { Link } from "react-router-dom"
 const Profile = () => {
   const userData=useSelector((state)=>state.user.currentUser)
 const fileRef=useRef(null)
@@ -14,7 +14,7 @@ const [uploadSuccess, setUploadSuccess]=useState()
 const [err, setErr]=useState()
 const [formData, setFormData]=useState({})
 const dispatch=useDispatch()
-const navigate=useNavigate()
+
 
 useEffect(()=>{
   console.log("use effect calling")
@@ -87,11 +87,7 @@ try {
 }
 }
 
-// console.log("form data", formData.avatar)
-const handleSignOut=()=>{
-  dispatch(signOutSuccess(""))
-  navigate("/")
-}
+
 
   return (
     <>
@@ -136,9 +132,7 @@ const handleSignOut=()=>{
           </div>
             </form>
       </div>
-    <div className="flex justify-between  px-8 mb-4 gap-2">
-     <button onClick={handleSignOut} className=" text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">SIGN OUT</button>    
-        </div>
+   
     </div>
   </div>
 </section>
