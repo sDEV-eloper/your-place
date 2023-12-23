@@ -12,7 +12,7 @@ export const signup = async (req, res, next) => {
   try {
     const existingEmail = await User.findOne({ email });
     const existingUsername = await User.findOne({ username });
-    if (existingEmail && existingEmail) {
+    if (existingEmail && existingUsername) {
       return res.status(400).json("username and email already exists");
     }
     if (existingUsername) {
@@ -82,9 +82,7 @@ export const googleAuth = async (req, res, next) => {
         Math.random().toString(36).slice(-8);
       const hashedPassword = bcrypt.hashSync(generatePassword, 10);
       const newUser = new User({
-        username:
-          name.split(" ").join("").toLowerCase() +
-          Math.floor(1000 + Math.random() * 9000),
+        username: name.split(" ").join("").toLowerCase() + Math.floor(1000 + Math.random() * 9000),
         email,
         password: hashedPassword,
         avatar: photo,
