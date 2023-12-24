@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux"
 import {getDownloadURL, getStorage, ref, uploadBytesResumable} from 'firebase/storage'
 import {app} from '../firebase.js'
 import toast from 'react-hot-toast'
+import { MdAdd } from "react-icons/md";
+import { FaEdit, FaRegEye } from "react-icons/fa";
 import { updateUserFailure, updateUserSuccess } from "../assets/redux/userSlice/userSlice.js"
 import { Link } from "react-router-dom"
 const Profile = () => {
@@ -92,11 +94,11 @@ try {
   return (
     <>
   
-        <section className="bg-gray-50 dark:bg-gray-900">
+        <section className="bg-gray-200 ">
   <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
     <div className="w-full bg-transparent  md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 ">
-      <div className="p-6 space-y-4 md:space-y-2 sm:p-8">
-        <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white text-center">
+      <div className="p-6 space-y-4 md:space-y-2 sm:p-8 border rounded-lg bg-gray-100">
+        <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-800  text-center py-1 w-full md:text-2xl ">
           PROFILE
         </h1>
         <form className="space-y-4 md:space-y-3" onSubmit={handleUpdate}>
@@ -108,26 +110,39 @@ try {
       :  
       <p className="text-red-500 text-lg font-md">{err}</p>  
       }
+      <p className="underline text-xs flex gap-1 items-center justify-center text-red-400">
+        <FaEdit/>
+        click on image to change
+        </p>
         </div>
           <div className="flex items-center gap-6">
-            <input type="text" name="username" id="username" value={userData?.username} readOnly    className="bg-gray-50 border border-gray-300 text-gray-400 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  />
+            <input type="text" name="username" id="username" value={userData?.username} readOnly    className="bg-gray-200 border border-gray-300 text-gray-400 sm:text-sm rounded-lg  block w-full p-2 focus:outline-none "  />
           </div>
           <div className="flex items-center gap-6">
-             <input type="email" name="email" id="email" value={userData?.email} readOnly className="bg-gray-50 border border-gray-300 text-gray-400 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+             <input type="email" name="email" id="email" value={userData?.email} readOnly className="bg-gray-200 border border-gray-300 text-gray-400 sm:text-sm rounded-lg  block w-full p-2.5 focus:outline-none " />
           </div>
           <div className="flex items-center gap-6">
-             <input type="phone" name="phone" id="phone" value={userData?.phone.substr(3)} readOnly className="bg-gray-50 border border-gray-300 text-gray-400 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"   />
+             <input type="phone" name="phone" id="phone" value={userData?.phone.substr(3)} readOnly className="bg-gray-200 border border-gray-300 text-gray-400 sm:text-sm rounded-lg  block w-full p-2.5 focus:outline-none"   />
           </div>
           <div className="flex items-center gap-6">
-            <input type="password" name="password" id="password" placeholder="password"  onChange={handleChange}  className="bg-gray-50 border-2 border-gray-500 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  />
+            <input type="password" name="password" id="password" placeholder="password"  onChange={handleChange}  className="bg-gray-50 border-2 border-gray-500 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "  />
           </div>
          
-          <button type="submit" className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">UPDATE</button>
+          <button type="submit" className="w-full text-white bg-primary-700 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">UPDATE</button>
           <div className="flex gap-2">
            
-            <Link to='/create-list'  className="w-full text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">CREATE LISTING</Link>
+            <Link to='/create-list'  className=" flex justify-center items-center w-full text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+              <MdAdd size={20}/>
+              CREATE LISTING 
+            </Link>
             
-          <Link to={`/view-list/${userData._id}`} className="w-full text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">VIEW LISTING</Link>
+          <Link to={`/view-list/${userData._id}`} className="flex justify-center items-center w-full text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+   
+<span className="mr-1">
+<FaRegEye size={20} />
+</span>
+            VIEW LISTING
+            </Link>
       
           </div>
             </form>

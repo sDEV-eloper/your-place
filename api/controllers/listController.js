@@ -89,9 +89,41 @@ export const getAllList= async (req, res, next) => {
       }
   
       let parking = req.query.parking;
+      let single = req.query.single;
+      let double = req.query.double;
+      let triple = req.query.triple;
+      let kitchen = req.query.kitchen;
+      let electricity = req.query.electricity;
+      let boys = req.query.boys;
+      let girls = req.query.girls;
+      let security = req.query.security;
   
       if (parking === undefined || parking === 'false') {
         parking = { $in: [false, true] };
+      }
+      if (single === undefined || single === 'false') {
+        single = { $in: [false, true] };
+      }
+      if (double === undefined || double === 'false') {
+        double = { $in: [false, true] };
+      }
+      if (triple === undefined || triple === 'false') {
+        triple = { $in: [false, true] };
+      }
+      if (security === undefined || security === 'false') {
+        security = { $in: [false, true] };
+      }
+      if (kitchen === undefined || kitchen === 'false') {
+        kitchen = { $in: [false, true] };
+      }
+      if (electricity=== undefined || electricity=== 'false') {
+        electricity= { $in: [false, true] };
+      }
+      if (boys === undefined || boys === 'false') {
+        boys = { $in: [false, true] };
+      }
+      if (girls === undefined || girls === 'false') {
+        girls = { $in: [false, true] };
       }
   
       let type = req.query.type;
@@ -111,6 +143,14 @@ export const getAllList= async (req, res, next) => {
         furnished,
         parking,
         type,
+        boys,
+        girls,
+        electricity,
+        kitchen,
+        single,
+        double,
+        triple,
+        security,
       })
         .sort({ [sort]: order })
         .limit(limit)

@@ -66,8 +66,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 const pages = ['Home', 'About'];
-const userSettings = ['Username', 'Profile', 'Signout'];
-const noUserSettings = ['Profile', 'Signin/Signup'];
+const userSettings = ['Username', 'Profile', 'Your Lists', 'Create List', 'Signout'];
+const noUserSettings = ['Profile',  'Signin/Signup'];
 
 
 function Header() {
@@ -236,7 +236,7 @@ if(searchTermFromUrl){
               {currentUser ?
               userSettings?.map((setting) => (
                 <MenuItem key={setting} onClick={setting==="Signout"?handleSignOut:null}>
-                  <Link to={setting==='Profile'? '/profile':null}>
+                  <Link to={setting==='Profile'? '/profile':(setting==='Your Lists'? `/view-list/${currentUser._id}`:(setting==='Create List'? `/create-list`:null))}>
                   <Typography  textAlign="center"  sx={setting === "Username" ? { color: 'gray', } :(setting === "Signout" ?{ color: 'white', p:1, borderRadius:'5px', backgroundColor:'red' } : '')} >
                     {
                     setting==='Username'?currentUser?.username: setting

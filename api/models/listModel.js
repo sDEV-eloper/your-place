@@ -9,7 +9,10 @@ const listSchema=new mongoose.Schema(
         description: {
           type: String,
         },
-     
+        contact: {
+          type: String,
+          required:true
+        },
         address: {
           type: String,
           required: true,

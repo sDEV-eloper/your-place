@@ -165,6 +165,17 @@ const handleSubmit=async(e)=>{
             minLength='2'
             required
                  />
+          <input
+            type='text'
+            onChange={handleChange}
+            value={formData.contact}
+            placeholder='Owner Contact Number'
+            className='border p-3 rounded-lg'
+            id='contact'
+            maxLength='15'
+            minLength='8'
+            required
+                 />
           <textarea
             type='text'
             placeholder='Description(Optional)'
@@ -175,7 +186,7 @@ const handleSubmit=async(e)=>{
           />
           <input
             type='text'
-            placeholder='Address'
+            placeholder='Address(local area, district, pin-code,  state, country)'
             className='border p-3 rounded-lg'
             id='address'
             required

@@ -168,18 +168,28 @@ const handleSubmit=async(e)=>{
             minLength='2'
             required
                  />
+          <input
+            type='text'
+            onChange={handleChange}
+            value={formData.contact}
+            placeholder='Owner Contact Number'
+            className='border p-3 rounded-lg'
+            id='contact'
+            maxLength='15'
+            minLength='8'
+            required
+                 />
           <textarea
             type='text'
-            placeholder='Description'
+            placeholder='Description(Optional)'
             className='border p-3 rounded-lg'
             id='description'
-            required
             onChange={handleChange}
             value={formData.description}
           />
           <input
             type='text'
-            placeholder='Address'
+            placeholder='Address(local area, district, pin-code,  state, country)'
             className='border p-3 rounded-lg'
             id='address'
             required
@@ -190,22 +200,22 @@ const handleSubmit=async(e)=>{
             <div className='flex gap-2'>
               <input
                 type='checkbox'
-                id='sale'
+                id='available'
                 className='w-5'
                 onChange={handleChange}
-            checked={formData.type==='sale'}
+            checked={formData.type==='available'}
               />
-              <span>Sell</span>
+              <span>Available</span>
             </div>
             <div className='flex gap-2'>
               <input
                 type='checkbox'
-                id='rent'
+                id='unavailable'
                 className='w-5'
                 onChange={handleChange}
-            checked={formData.type==='rent'}
+            checked={formData.type==='unavailable'}
               />
-              <span>Rent</span>
+              <span>Unavailable</span>
             </div>
             <div className='flex gap-2'>
               <input
@@ -216,6 +226,86 @@ const handleSubmit=async(e)=>{
                 checked={formData.parking}
               />
               <span>Parking spot</span>
+            </div>
+            <div className='flex gap-2'>
+              <input
+                type='checkbox'
+                id='boys'
+                className='w-5'
+                onChange={handleChange}
+                checked={formData.boys}
+              />
+              <span>Boys</span>
+            </div>
+            <div className='flex gap-2'>
+              <input
+                type='checkbox'
+                id='girls'
+                className='w-5'
+                onChange={handleChange}
+                checked={formData.girls}
+              />
+              <span>Girls</span>
+            </div>
+            <div className='flex gap-2'>
+              <input
+                type='checkbox'
+                id='security'
+                className='w-5'
+                onChange={handleChange}
+                checked={formData.security}
+              />
+              <span>Security</span>
+            </div>
+            <div className='flex gap-2'>
+              <input
+                type='checkbox'
+                id='electricity'
+                className='w-5'
+                onChange={handleChange}
+                checked={formData.electricity}
+              />
+              <span>Electricity</span>
+            </div>
+            <div className='flex gap-2'>
+              <input
+                type='checkbox'
+                id='kitchen'
+                className='w-5'
+                onChange={handleChange}
+                checked={formData.kitchen}
+              />
+              <span>Kitchen</span>
+            </div>
+            <div className='flex gap-2'>
+              <input
+                type='checkbox'
+                id='single'
+                className='w-5'
+                onChange={handleChange}
+                checked={formData.single}
+              />
+              <span>For Single </span>
+            </div>
+            <div className='flex gap-2'>
+              <input
+                type='checkbox'
+                id='double'
+                className='w-5'
+                onChange={handleChange}
+                checked={formData.double}
+              />
+              <span>2-Sharing</span>
+            </div>
+            <div className='flex gap-2'>
+              <input
+                type='checkbox'
+                id='triple'
+                className='w-5'
+                onChange={handleChange}
+                checked={formData.triple}
+              />
+              <span>3-Sharing</span>
             </div>
             <div className='flex gap-2'>
               <input
@@ -255,21 +345,56 @@ const handleSubmit=async(e)=>{
               />
               <p>Baths</p>
             </div>
+              {formData.single&&
             <div className='flex items-center gap-2'>
               <input
                 type='number'
                 id='regularPrice'
-                min='50'
+                min='500'
                 max='10000000'
                 required
                 className='p-3 border border-gray-300 rounded-lg'
                 onChange={handleChange}
                 value={formData.regularPrice}
               />
+                <div className='flex flex-col items-center'>
+                <p> Rent for Single Person </p>
+              </div>
+            </div>}
+           {formData.double &&
+            <div className='flex items-center gap-2'>
+              <input
+                type='number'
+                id='doubleSharingPrice'
+                min='500'
+                max='10000000'
+                required
+                className='p-3 border border-gray-300 rounded-lg'
+                onChange={handleChange}
+                value={formData.doubleSharingPrice}
+              />
               <div className='flex flex-col items-center'>
-                <p>Regular price</p>
+                <p>Double-Sharing Rent  <span className="text-red-500">{'(per Person)'}</span></p>
               </div>
             </div>
+            }
+
+           { formData.triple &&
+           <div className='flex items-center gap-2'>
+              <input
+                type='number'
+                id='tripleSharingPrice'
+                min='500'
+                max='10000000'
+                required
+                className='p-3 border border-gray-300 rounded-lg'
+                onChange={handleChange}
+                value={formData.tripleSharingPrice}
+              />
+              <div className='flex flex-col items-center'>
+                <p>Triple-Sharing Rent  <span className="text-red-500">{'(per Person)'}</span></p>
+              </div>
+            </div>}
             
           </div>
         </div>
