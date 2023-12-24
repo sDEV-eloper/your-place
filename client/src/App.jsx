@@ -12,6 +12,7 @@ import UpdateList from './pages/UpdateList'
 import Listing from './pages/Listing'
 import Search from './pages/Search'
 import SignUp from './pages/SignUp'
+import Footer from './components/Footer'
 
 
 
@@ -35,6 +36,7 @@ export default function App() {
         <Route path="/sign-in" element={<SignIn/>}/>
         <Route path="/sign-up" element={<SignUp/>}/>
       </Routes>
+      <Footer/>
     </BrowserRouter>
   )
 }
