@@ -29,7 +29,6 @@ const handleSubmit=async(e)=>{
           password,
         }),
       });
-    console.log("response", response);
     if (response.ok) {
       const responseData = await response.json();
      toast.success(responseData); 
@@ -69,7 +68,6 @@ const handleSubmit=async(e)=>{
             <div className='flex '>
           
        <PhoneAuth phone={phone} setPhone={setPhone} countryCode={countryCode} setCountryCode={setCountryCode} user={user} setUser={setUser}/>
-       {console.log("phone", phone)}
             </div>
                </div>
           <div>

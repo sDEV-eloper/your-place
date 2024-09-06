@@ -3,7 +3,6 @@
 import PropTypes from 'prop-types';
 
 function ImageSlider({images}) {
-    console.log(images)
   return (
    <div className='h-1/3 flex flex-wrap gap-2'>
    {

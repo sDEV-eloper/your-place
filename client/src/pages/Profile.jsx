@@ -19,9 +19,7 @@ const dispatch=useDispatch()
 
 
 useEffect(()=>{
-  console.log("use effect calling")
   if(file){
-    console.log("use effect calling handleFileUpload")
   handleFileUpload(file);
 }
 },[file])
@@ -76,7 +74,6 @@ try {
     body: JSON.stringify(formData),
   });
   const data = await res.json();
-  console.log("data", data)
   if (data.success === false) {
     dispatch(updateUserFailure(data.message));
     return;
@@ -122,7 +119,7 @@ try {
              <input type="email" name="email" id="email" value={userData?.email} readOnly className="bg-gray-200 border border-gray-300 text-gray-400 sm:text-sm rounded-lg  block w-full p-2.5 focus:outline-none " />
           </div>
           <div className="flex items-center gap-6">
-             <input type="phone" name="phone" id="phone" value={userData?.phone.substr(3)} readOnly className="bg-gray-200 border border-gray-300 text-gray-400 sm:text-sm rounded-lg  block w-full p-2.5 focus:outline-none"   />
+             <input type="phone" name="phone" id="phone" value={userData?.phone} readOnly className="bg-gray-200 border border-gray-300 text-gray-400 sm:text-sm rounded-lg  block w-full p-2.5 focus:outline-none"   />
           </div>
           <div className="flex items-center gap-6">
             <input type="password" name="password" id="password" placeholder="password"  onChange={handleChange}  className="bg-gray-50 border-2 border-gray-500 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "  />

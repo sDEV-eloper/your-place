@@ -8,7 +8,6 @@ import { list } from "firebase/storage";
 const ViewList = () => {
   const navigate=useNavigate()
   const { currentUser } = useSelector((state) => state.user);
-  console.log("view list currentUser", currentUser)
   const [listData, setListData] = useState([]);
   const fetchListData = async () => {
     try {
@@ -18,10 +17,8 @@ const ViewList = () => {
           "Content-Type": "application/json",
         },
       });
-      console.log("response in view list--", response)
       const data = await response.json();
       setListData(data);
-      console.log("list data in view list----->",listData)
     } catch (err) {
       console.log("Error in fetching data");
     }
@@ -38,7 +35,6 @@ const ViewList = () => {
           });
         const data= await response.json();
         if(data.success===false){
-            console.log(data.message)
              return;
             }
         setListData((item)=>item.filter(list=>list._id!=listId))
@@ -54,7 +50,6 @@ const ViewList = () => {
   return (
   <>
   <h1 className="text-4xl text-gray-600 text-center my-4  border-b-2 py-2 font-bold">Your Rental Lists</h1>
-  {console.log("listdata len", listData.length)}
    { listData.length ?
     <div className="flex flex-wrap">
       {listData.map((item) => (

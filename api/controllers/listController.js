@@ -43,7 +43,7 @@ export const deleteList=async(req, res, next)=>{
 }
 
 export const updateList=async(req, res, next)=>{
-    console.log("reb", req.body)
+  
     const listing=await Listing.findById(req.params.id)
     if(!listing){
         return next(errorHandler("No such listing exists", "not found"))
