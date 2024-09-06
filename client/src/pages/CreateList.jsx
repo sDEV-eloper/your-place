@@ -36,8 +36,7 @@ const CreateList = () => {
         security:false,
         
     })
-    console.log("img",images)
-    console.log("form data",formData)
+  
 const handleUploadImage=()=>{
 setUploading(true)
     if(images.length>0 && images.length<7){
@@ -134,7 +133,7 @@ const handleSubmit=async(e)=>{
         
     })
     const res=await data.json()
-    console.log("after ceated list, result", res)
+
     setLoading(false)
     toast.success("List Created")
     navigate(`/view-list/${res._id}`)

@@ -8,7 +8,12 @@ import listingRouter from './routes/listingRouter.js'
 import cookieParser from 'cookie-parser'
 import path from 'path'
 dotenv.config()
-mongoose.connect(process.env.YOURPLACE_DB_URI)
+
+mongoose.connect(process.env.YOURPLACE_DB_URI,{
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    serverSelectionTimeoutMS: 5000,
+})
 .then(()=>console.log("Mongodb connected"))
 .catch((err)=>console.log(err))
 

@@ -29,7 +29,6 @@ const [password, setPassword]=useState('')
     
       if (response.ok) {
         const userResponseData = await response.json();
-        console.log("urd", userResponseData)
        toast.success(`${userResponseData.username} sign in successfully`); 
        dispatch(signInSuccess(userResponseData))
        navigate('/')

@@ -27,8 +27,7 @@ const UpdateList = () => {
         parking:false,
         furnished:false,
     })
-    console.log("img",images)
-    console.log("form data",formData)
+
 
 useEffect(()=>{
 const fetchListing=async()=>{
